@@ -1,5 +1,5 @@
 package agh.ics.opp;
 
 public interface IAnimalMover {
-    void makeMove();
+    void makeMove(Animal animal);
 }

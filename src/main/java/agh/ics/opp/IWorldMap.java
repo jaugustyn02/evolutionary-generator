@@ -7,12 +7,13 @@ public interface IWorldMap {
     void placeMapElement(IMapElement element);
     void removeMapElement(IMapElement element);
     boolean isOccupied(Vector2d position);
+    void applyMoveToMapRules(Animal animal, Vector2d newPosition);
     Object objectAt(Vector2d position);
     String toString();
     List<Animal> getAnimals();
 
     List<Plant> getPlants();
 
-    Vector2d lowerLeft();
-    Vector2d upperRight();
+    Vector2d getLowerLeft();
+    Vector2d getUpperRight();
 }

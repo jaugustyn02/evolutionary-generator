@@ -9,8 +9,11 @@ public enum MapDirection {
     SOUTH_WEST,
     WEST,
     NORTH_WEST;
-
     private static final MapDirection[] values = values();
+
+    public MapDirection rotate(int rotation){
+        return values[(this.ordinal()+rotation) % values.length];
+    }
 
     public String toString(){
         return switch (this){
@@ -25,13 +28,13 @@ public enum MapDirection {
         };
     }
 
-    public MapDirection next(){
-        return values[(this.ordinal()+1) % values.length];
-    }
-
-    public MapDirection previous(){
-        return values[(this.ordinal()+values.length-1) % values.length];
-    }
+//        public MapDirection next(){
+//        return values[(this.ordinal()+1) % values.length];
+//    }
+//
+//    public MapDirection previous(){
+//        return values[(this.ordinal()+values.length-1) % values.length];
+//    }
 
     public Vector2d toUnitVector(){
         return switch (this){

@@ -1,5 +1,5 @@
 package agh.ics.opp;
 
-public interface IPlantsGrower {
+public interface IPlantGrower {
     void grow();
 }
