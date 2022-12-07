@@ -1,12 +1,9 @@
 package agh.ics.opp;
 
 public class HellPortalMap extends AbstractWorldMap{
-//    private final MapUpdater mapUpdater;
 
-    public HellPortalMap(Vector2d upperRight, SimulationSetup setup) {
-        super(upperRight);
-//        this.mapUpdater = new MapUpdater(this, mutator, mover, grower);
-//        super.mapUpdater = this.mapUpdater;
+    public HellPortalMap(SimulationSetup setup) {
+        super(new Vector2d(setup.mapWidth(), setup.mapHeight()));
     }
 
     @Override
@@ -15,7 +12,6 @@ public class HellPortalMap extends AbstractWorldMap{
     }
 
     @Override
-    public void applyMoveToMapRules(Animal animal, Vector2d newPosition) {
+    public void adjustAnimalPosition(Vector2d oldPosition, Animal animal) {}
 
-    }
 }

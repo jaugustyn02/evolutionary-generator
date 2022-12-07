@@ -2,8 +2,9 @@ package agh.ics.opp;
 
 public class GlobeMap extends AbstractWorldMap{
     private final SimulationSetup setup;
-    public GlobeMap(Vector2d upperRight, SimulationSetup setup){
-        super(upperRight);
+
+    public GlobeMap(SimulationSetup setup){
+        super(new Vector2d(setup.mapWidth(), setup.mapHeight()));
         this.setup = setup;
     }
 
@@ -13,21 +14,20 @@ public class GlobeMap extends AbstractWorldMap{
     }
 
     public boolean circledFromRight(Vector2d position){
-        return position.getCoordinate(0) > super.getUpperRight().getCoordinate(0);
+        return position.x > super.getUpperRight().x;
     }
 
     public boolean circledFromLeft(Vector2d position){
-        return position.getCoordinate(0) < super.getLowerLeft().getCoordinate(0);
+        return position.x < super.getLowerLeft().x;
     }
 
     @Override
-    public void applyMoveToMapRules(Animal animal, Vector2d newPosition){
-        if(canMoveTo(newPosition)){
-            if(circledFromRight(newPosition))
-                newPosition = animal.getPosition().subtractX(super.getUpperRight());
-            else if(circledFromLeft(newPosition))
-                newPosition = animal.getPosition().addX(super.getUpperRight());
-            animal.moveToPosition(newPosition);
+    public void adjustAnimalPosition(Vector2d oldPosition, Animal animal){
+        if (canMoveTo(animal.getPosition())){
+            if (circledFromRight(animal.getPosition()))
+                animal.setPosition(new Vector2d(0, animal.getPosition().y));
+            else if (circledFromLeft(animal.getPosition()))
+                animal.setPosition(new Vector2d(getUpperRight().x, animal.getPosition().y));
         }
         else animal.turnBack();
     }

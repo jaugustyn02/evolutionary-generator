@@ -3,30 +3,27 @@ package agh.ics.opp;
 
 public record SimulationSetup(
         // map settings
-        MapVariant mapVariant,
+        boolean mapVariant,  // False - GlobeMap, True - HellPortalMap
         int mapHeight,
         int mapWidth,
 
         // plants settings
-        GrowerVariant growerVariant,
+        boolean plantPreferencesVariant,  // False - wariant z równikiem, True - wariant z toksycznymi trupami
         int initialNumOfPlants,
         int numOfPlantsPerDay,
         int plantEnergy,
-//        IPlantGrower plantGrower,
 
         // animals settings
-        MoverVariant moverVariant,
+        boolean animalBehaviorsVariant,  // False - ruch zgodnie z genomem, True - trochę szaleństwa
         int initialNumOfAnimals,
         int initialAnimalEnergy,
-        int fullAnimalEnergy,  // minimalna energia by zwierzę było najedzone
+        int fullAnimalEnergy,  // minimalna wartość energii by zwierzę było najedzone
         int animalEnergyConsumption,
         int genomeLength,
-//        IAnimalMover animalMover,
 
         // mutation settings
-        MutatorVariant mutatorVariant,
+        boolean mutationsVariant, // False - wariant w pełni losowych mutacji, True - mutacja ograniczona +-1
         int minNumOfMutations,
         int maxNumOfMutations
-//        IGenomeMutator genomeMutator
         ) {
 }

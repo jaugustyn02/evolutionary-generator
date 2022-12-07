@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface IWorldMap {
     boolean canMoveTo(Vector2d position);
+    void adjustAnimalPosition(Vector2d position, Animal animal);
     void placeMapElement(IMapElement element);
-    void removeMapElement(IMapElement element);
+    void removeMapElement(Vector2d position, IMapElement element);
     boolean isOccupied(Vector2d position);
-    void applyMoveToMapRules(Animal animal, Vector2d newPosition);
     Object objectAt(Vector2d position);
     String toString();
     List<Animal> getAnimals();

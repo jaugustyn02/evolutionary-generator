@@ -67,8 +67,4 @@ public class Vector2d {
     public Vector2d copy(){
         return new Vector2d(this.x, this.y);
     }
-
-    public int getCoordinate(int i){
-        return (i == 0 ? this.x : this.y);
-    }
 }

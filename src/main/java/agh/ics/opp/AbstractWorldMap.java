@@ -5,27 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-abstract public class AbstractWorldMap implements IWorldMap{
+abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
     protected Map<Vector2d, List<Animal>> animals = new HashMap<>();
     protected Map<Vector2d, Plant> plants = new HashMap<>();
     public final static Vector2d lowerLeft = new Vector2d(0 ,0);
     private final Vector2d upperRight;
-
     protected final MapVisualizer mapVisualizer = new MapVisualizer(this);
-
     protected AbstractWorldMap(Vector2d upperRight) {
         this.upperRight = upperRight;
     }
 
     abstract public boolean canMoveTo(Vector2d position);
-
-    public abstract void applyMoveToMapRules(Animal animal, Vector2d newPosition);
-
-    public void reloadMapElements(){
-        for (IMapElement animal: this.getAnimals()){
-            this.removeMapElement(animal);
-        }
-    }
 
     @Override
     public void placeMapElement(IMapElement element) {
@@ -40,16 +30,15 @@ abstract public class AbstractWorldMap implements IWorldMap{
             plants.put(plant.getPosition(), plant);
     }
 
-    public void removeMapElement(IMapElement element){
+    public void removeMapElement(Vector2d position, IMapElement element){
         if(element instanceof Animal animal){
-            animals.get(animal.getPosition()).remove(animal);
-            if(animals.get(animal.getPosition()).isEmpty()){
-                animals.remove(animal.getPosition());
+            animals.get(position).remove(animal);
+            if(animals.get(position).isEmpty()){
+                animals.remove(position);
             }
-//            animals.remove(animal.getPosition());
         }
         else if (element instanceof Plant plant){
-            plants.remove(plant.getPosition());
+            plants.remove(position);
         }
     }
 
@@ -80,9 +69,7 @@ abstract public class AbstractWorldMap implements IWorldMap{
     }
 
     @Override
-    public final Vector2d getLowerLeft() {
-        return lowerLeft;
-    }
+    public final Vector2d getLowerLeft() { return lowerLeft; }
 
     @Override
     public Vector2d getUpperRight(){
@@ -92,5 +79,15 @@ abstract public class AbstractWorldMap implements IWorldMap{
     @Override
     public String toString(){
         return mapVisualizer.draw(this.getLowerLeft(), this.getUpperRight());
+    }
+
+    abstract public void adjustAnimalPosition(Vector2d oldPosition, Animal animal);
+    @Override
+    public void positionChanged(Vector2d oldPosition, Animal animal){
+        adjustAnimalPosition(oldPosition, animal);
+        if (oldPosition != animal.getPosition()){
+            this.removeMapElement(oldPosition, animal);
+            this.placeMapElement(animal);
+        }
     }
 }
