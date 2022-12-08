@@ -23,6 +23,6 @@ public class Plant extends AbstractMapElement{
 
     @Override
     public String toString() {
-        return "*";
+        return "φ";
     }
 }

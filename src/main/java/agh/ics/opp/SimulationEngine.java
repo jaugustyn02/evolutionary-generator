@@ -11,15 +11,17 @@ public class SimulationEngine implements IEngine, Runnable{
 //    private final MapRenderer renderer;
 
     public SimulationEngine(SimulationSetup setup) {
-        this.map = (setup.mapVariant() ? new GlobeMap(setup) : new HellPortalMap(setup));
+        this.map = (setup.mapVariant() ? new HellPortalMap(setup) : new GlobeMap(setup));
         this.updater = new MapUpdater(map, setup);
+        System.out.println(map);
     }
 
     @Override
     public void run() {
-        System.out.println(map.toString());
-        updater.nextDay();
-        System.out.println(map);
+        for (int i=0; i<10; i++){
+            updater.nextDay();
+            System.out.println(map);
+        }
 
 //        if(renderer != null) this.renderer.render();
 //        for (MoveDirection direction: this.directions) {

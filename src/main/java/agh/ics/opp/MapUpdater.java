@@ -45,7 +45,9 @@ public class MapUpdater {
     }
 
     private void generatePlants(){
-        IMapElement plant = new Plant(new Vector2d(0, 1));
-        map.placeMapElement(plant);
+        for (int i=0; i<setup.initialNumOfPlants(); i++){
+            IMapElement plant = new Plant(new Vector2d(0, 1));
+            map.placeMapElement(plant);
+        }
     }
 }

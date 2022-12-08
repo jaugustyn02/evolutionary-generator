@@ -84,10 +84,7 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     abstract public void adjustAnimalPosition(Vector2d oldPosition, Animal animal);
     @Override
     public void positionChanged(Vector2d oldPosition, Animal animal){
-        adjustAnimalPosition(oldPosition, animal);
-        if (oldPosition != animal.getPosition()){
-            this.removeMapElement(oldPosition, animal);
-            this.placeMapElement(animal);
-        }
+        this.removeMapElement(oldPosition, animal);
+        this.placeMapElement(animal);
     }
 }

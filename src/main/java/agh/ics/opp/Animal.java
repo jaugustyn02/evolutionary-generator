@@ -2,7 +2,9 @@ package agh.ics.opp;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Animal extends AbstractMapElement{
     private Vector2d position;
@@ -20,23 +22,23 @@ public class Animal extends AbstractMapElement{
         this.position = position;
         this.energy = initialEnergy;
         this.genome = genome;
-        this.nextGeneIndex = 0; // zmienić na losową wartość indeksu
-        this.direction = MapDirection.NORTH;
         this.moveBehavior = behavior;
-    }
 
-//    public void makeTurn(){
-//        this.turnBy(genome[nextGeneIndex]);
-//        this.nextGeneIndex();
-//        this.makeMove();
-//    }
+        this.nextGeneIndex = ThreadLocalRandom.current().nextInt(0, genome.length);
+        this.direction = MapDirection.NORTH.rotate(ThreadLocalRandom.current().nextInt(0, 8));
+
+        System.out.println("genome: "+Arrays.toString(genome));
+    }
 
     public void makeMove(){
         this.turnBy(genome[nextGeneIndex]);
+        System.out.println("animal turned by "+genome[nextGeneIndex]+" ("+nextGeneIndex+")");
         this.nextGeneIndex();
         Vector2d oldPosition = this.position;
         this.position = this.position.add(this.direction.toUnitVector());
-        this.positionChanged(oldPosition);
+        map.adjustAnimalPosition(oldPosition, this);
+        if(!oldPosition.equals(this.position))
+            this.positionChanged(oldPosition);
     }
 
     public void turnBy(int rotation){
