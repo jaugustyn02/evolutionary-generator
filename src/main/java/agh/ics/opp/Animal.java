@@ -110,3 +110,4 @@ public class Animal extends AbstractMapElement{
 //        return energy.toString();
     }
 }
+// test
