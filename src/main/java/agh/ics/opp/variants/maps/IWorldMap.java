@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface IWorldMap {
     boolean canMoveTo(Vector2d position);
-    void adjustAnimalPosition(Vector2d position, Animal animal);
     void placeMapElement(IMapElement element);
     void removeMapElement(Vector2d position, IMapElement element);
     boolean isOccupied(Vector2d position);
@@ -22,4 +21,6 @@ public interface IWorldMap {
     Animal getTopAnimalAt(Vector2d position);
     Animal popTopAnimalAt(Vector2d position);
     Plant getPlantAt(Vector2d position);
+
+    boolean isAnimalAt(Vector2d position);
 }

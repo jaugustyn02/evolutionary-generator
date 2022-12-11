@@ -6,6 +6,7 @@ import agh.ics.opp.variants.behaviours.OrderlySelector;
 import agh.ics.opp.elements.Animal;
 import agh.ics.opp.elements.IMapElement;
 import agh.ics.opp.elements.Plant;
+import agh.ics.opp.variants.maps.IAnimalPositionCorrector;
 import agh.ics.opp.variants.maps.IWorldMap;
 import agh.ics.opp.variants.mutations.BoundedMutator;
 import agh.ics.opp.variants.mutations.IGenomeMutator;
@@ -13,6 +14,9 @@ import agh.ics.opp.variants.mutations.UnboundedMutator;
 import agh.ics.opp.variants.preferences.AntiToxicLocator;
 import agh.ics.opp.variants.preferences.EquatorialLocator;
 import agh.ics.opp.variants.preferences.IPlantPlacementLocator;
+
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MapUpdater {
     private final IWorldMap map;
@@ -50,7 +54,13 @@ public class MapUpdater {
         generatePlants(setup.numOfPlantsPerDay());
     }
 
-    private void removeCorpses(){}
+    private void removeCorpses(){
+        for(Animal animal: map.getAnimals()){
+            if (animal.getEnergy() == 0){
+               map.removeMapElement(animal.getPosition(), animal);
+            }
+        }
+    }
 
     private void moveAnimals(){
         for (Animal animal: map.getAnimals()){
@@ -69,18 +79,18 @@ public class MapUpdater {
 
     }
 
-    private void reduceEnergy(){}
+    private void reduceEnergy(){
+        for (Animal animal: map.getAnimals()){
+            animal.reduceEnergy(1);
+        }
+    }
 
     private void generateAnimals(){
-        int[] genome = new int[]{2,3,7,0,5};
-        Animal animal = new Animal(map, new Vector2d(2, 2), setup.initialAnimalEnergy(), genome, geneSelector, genomeMutator);
-        animal.addObserver((IAnimalMovementObserver) map);
-        map.placeMapElement(animal);
-
-        int[] genome2 = new int[]{0,2,0,7,5};
-        Animal animal2 = new Animal(map, new Vector2d(4, 4), setup.initialAnimalEnergy(), genome2, geneSelector, genomeMutator);
-        animal2.addObserver((IAnimalMovementObserver) map);
-        map.placeMapElement(animal2);
+        for (int i=0; i < setup.initialNumOfAnimals(); i++){
+            Animal animal = new Animal(getRandomAnimalPosition(), setup.initialAnimalEnergy(), getRandomGenome(), (IAnimalPositionCorrector) map, geneSelector, genomeMutator);
+            animal.addObserver((IAnimalMovementObserver) map);
+            map.placeMapElement(animal);
+        }
     }
 
     private void generatePlants(int NumOfPlants){
@@ -88,5 +98,17 @@ public class MapUpdater {
             IMapElement plant = new Plant(plantPlacementLocator.getNewPlantPosition());
             map.placeMapElement(plant);
         }
+    }
+
+    private int[] getRandomGenome(){
+        return Arrays.stream(new int[setup.genomeLength()]).map(a -> MapDirection.getRandom().ordinal()).toArray();
+    }
+
+    private Vector2d getRandomAnimalPosition(){
+        Vector2d position;
+        do{
+            position = Vector2d.getRandom(map.getLowerLeft(), map.getUpperRight());
+        }while (map.isAnimalAt(position));
+        return position;
     }
 }

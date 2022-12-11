@@ -1,6 +1,7 @@
 package agh.ics.opp;
 
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Vector2d {
@@ -9,6 +10,14 @@ public class Vector2d {
         this.x = x;
         this.y = y;
     }
+
+    public static Vector2d getRandom(Vector2d lowerLeft, Vector2d upperRight){
+        return new Vector2d(
+            ThreadLocalRandom.current().nextInt(lowerLeft.x, upperRight.x),
+            ThreadLocalRandom.current().nextInt(lowerLeft.y, upperRight.y)
+        );
+    }
+
     public String toString(){
         return String.format("(%d,%d)", this.x, this.y);
     }
@@ -18,14 +27,12 @@ public class Vector2d {
     public boolean follows(Vector2d other){
         return this.x >= other.x && this.y >= other.y;
     }
-
     public Vector2d add(Vector2d other){
         return new Vector2d(this.x + other.x, this.y + other.y);
     }
     public Vector2d subtract(Vector2d other){
         return new Vector2d(this.x - other.x, this.y - other.y);
     }
-
     public Vector2d upperRight(Vector2d other){
         return new Vector2d(Integer.max(this.x, other.x), Integer.max(this.y, other.y));
     }

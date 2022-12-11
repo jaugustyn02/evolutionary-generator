@@ -15,7 +15,7 @@ public class GlobeMap extends AbstractWorldMap{
     }
 
     @Override
-    public void adjustAnimalPosition(Vector2d oldPosition, Animal animal){
+    public void correctAnimalPosition(Vector2d oldPosition, Animal animal){
         if (canMoveTo(animal.getPosition())){
             if (circledFromRight(animal.getPosition()))
                 animal.setPosition(new Vector2d(0, animal.getPosition().y));

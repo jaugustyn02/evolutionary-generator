@@ -4,7 +4,7 @@ import agh.ics.opp.IAnimalMovementObserver;
 import agh.ics.opp.MapDirection;
 import agh.ics.opp.Vector2d;
 import agh.ics.opp.variants.behaviours.IGeneSelector;
-import agh.ics.opp.variants.maps.IWorldMap;
+import agh.ics.opp.variants.maps.IAnimalPositionCorrector;
 import agh.ics.opp.variants.mutations.IGenomeMutator;
 
 import java.util.ArrayList;
@@ -18,28 +18,28 @@ public class Animal extends AbstractMapElement{
     private MapDirection direction;
     private int nextGeneIndex;
 
-    private final IWorldMap map;
+    private final IAnimalPositionCorrector corrector;
     private final IGenomeMutator mutator;
     private final IGeneSelector selector;
     private final List<IAnimalMovementObserver> observers = new ArrayList<>();
 
-    public Animal(IWorldMap map, Vector2d position, Integer initEnergy, int[] genome, IGeneSelector selector, IGenomeMutator mutator){
-        this.map = map;
+    public Animal(Vector2d position, Integer initEnergy, int[] genome, IAnimalPositionCorrector corrector, IGeneSelector selector, IGenomeMutator mutator){
         this.position = position;
         this.energy = initEnergy;
         this.genome = genome;
+        this.corrector = corrector;
         this.selector = selector;
         this.mutator = mutator;
 
         this.nextGeneIndex = ThreadLocalRandom.current().nextInt(0, genome.length);
-        this.direction = MapDirection.NORTH.rotate(ThreadLocalRandom.current().nextInt(0, 8));  // można dodać metode random() do MapDirection
+        this.direction = MapDirection.getRandom();
     }
     
     public void makeMove(){
         this.turnBy(genome[nextGeneIndex]);
         Vector2d oldPosition = this.position;
         this.position = this.position.add(this.direction.toUnitVector());
-        map.adjustAnimalPosition(oldPosition, this);
+        corrector.correctAnimalPosition(oldPosition, this);
         this.newMovement(oldPosition);
         this.updateNextGeneIndex();
     }
@@ -88,8 +88,9 @@ public class Animal extends AbstractMapElement{
 
     // energy
     public int getEnergy(){ return this.energy; }
-    public void decrementEnergy(){ this.energy--; }
-    public void decreaseEnergy(Integer energy){ this.energy -= energy; }
+    public void reduceEnergy(Integer energy){
+        this.energy -= energy;
+    }
     public void increaseEnergy(Integer energy){
         System.out.println("Zwierzak z pola: "+this.position+" powiedział \"MMMM pyszota!\"");
         this.energy += energy;
@@ -107,8 +108,8 @@ public class Animal extends AbstractMapElement{
     // observers end
 
     public String toString(){
-        return direction.toString();
-//        return energy.toString();
+//        return direction.toString();
+        return energy.toString();
     }
 
     // gui

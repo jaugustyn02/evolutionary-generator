@@ -7,7 +7,7 @@ import agh.ics.opp.elements.Plant;
 
 import java.util.*;
 
-abstract public class AbstractWorldMap implements IWorldMap, IAnimalMovementObserver {
+abstract public class AbstractWorldMap implements IWorldMap, IAnimalMovementObserver, IAnimalPositionCorrector {
     private final Map<Vector2d, List<Animal>> animals = new HashMap<>();
     private final Map<Vector2d, Plant> plants = new HashMap<>();
     private final Set<Vector2d> eatingPositions = new HashSet<>();
@@ -22,7 +22,7 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalMovementObse
     }
 
     abstract public boolean canMoveTo(Vector2d position);
-    abstract public void adjustAnimalPosition(Vector2d oldPosition, Animal animal);
+    abstract public void correctAnimalPosition(Vector2d oldPosition, Animal animal);
 
     @Override
     public void placeMapElement(IMapElement element) {
@@ -129,7 +129,8 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalMovementObse
         return plants.get(position) != null;
     }
 
-    private boolean isAnimalAt(Vector2d position){
+    @Override
+    public boolean isAnimalAt(Vector2d position){
         return animals.get(position) != null;
     }
 }

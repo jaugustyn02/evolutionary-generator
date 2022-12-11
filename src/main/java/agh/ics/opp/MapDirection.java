@@ -1,5 +1,7 @@
 package agh.ics.opp;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public enum MapDirection {
     NORTH,
     NORTH_EAST,
@@ -10,6 +12,10 @@ public enum MapDirection {
     WEST,
     NORTH_WEST;
     private static final MapDirection[] values = values();
+
+    public static MapDirection getRandom(){
+        return values[ThreadLocalRandom.current().nextInt(0, values().length)];
+    }
 
     public MapDirection rotate(int rotation){
         return values[(this.ordinal()+rotation) % values.length];
@@ -27,14 +33,6 @@ public enum MapDirection {
             case NORTH_WEST -> "NW";
         };
     }
-
-//        public MapDirection next(){
-//        return values[(this.ordinal()+1) % values.length];
-//    }
-//
-//    public MapDirection previous(){
-//        return values[(this.ordinal()+values.length-1) % values.length];
-//    }
 
     public Vector2d toUnitVector(){
         return switch (this){

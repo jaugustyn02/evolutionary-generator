@@ -16,7 +16,7 @@ public class HellPortalMap extends AbstractWorldMap{
     }
 
     @Override
-    public void adjustAnimalPosition(Vector2d oldPosition, Animal animal) {
+    public void correctAnimalPosition(Vector2d oldPosition, Animal animal) {
         System.out.println("not this one yet");
     }
 
