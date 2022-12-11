@@ -1,5 +1,7 @@
 package agh.ics.opp;
 
+import agh.ics.opp.variants.maps.IWorldMap;
+
 /**
  * The map visualizer converts the {@link IWorldMap} map into a string
  * representation.
@@ -70,7 +72,7 @@ public class MapVisualizer {
     }
 
     private String drawObject(Vector2d currentPosition) {
-        String result = null;
+        String result;
         if (this.map.isOccupied(currentPosition)) {
             Object object = this.map.objectAt(currentPosition);
             if (object != null) {

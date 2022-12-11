@@ -2,12 +2,14 @@ package agh.ics.opp;
 
 //import agh.ics.oop.gui.MapRenderer;
 
-import java.util.List;
+import agh.ics.opp.variants.maps.GlobeMap;
+import agh.ics.opp.variants.maps.HellPortalMap;
+import agh.ics.opp.variants.maps.IWorldMap;
 
 public class SimulationEngine implements IEngine, Runnable{
     private final IWorldMap map;
     private final MapUpdater updater;
-    private int moveDelay = 100;
+//    private int moveDelay = 100;
 //    private final MapRenderer renderer;
 
     public SimulationEngine(SimulationSetup setup) {
@@ -18,7 +20,7 @@ public class SimulationEngine implements IEngine, Runnable{
 
     @Override
     public void run() {
-        for (int i=0; i<10; i++){
+        for (int i=0; i<5; i++){
             updater.nextDay();
             System.out.println(map);
         }
@@ -34,7 +36,7 @@ public class SimulationEngine implements IEngine, Runnable{
 //        }
     }
 
-    public void setMoveDelay(int moveDelay){
-        this.moveDelay = moveDelay;
-    }
+//    public void setMoveDelay(int moveDelay){
+//        this.moveDelay = moveDelay;
+//    }
 }

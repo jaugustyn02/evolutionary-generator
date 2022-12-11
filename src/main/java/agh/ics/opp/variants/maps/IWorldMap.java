@@ -1,4 +1,9 @@
-package agh.ics.opp;
+package agh.ics.opp.variants.maps;
+
+import agh.ics.opp.Vector2d;
+import agh.ics.opp.elements.Animal;
+import agh.ics.opp.elements.IMapElement;
+import agh.ics.opp.elements.Plant;
 
 import java.util.List;
 
@@ -11,9 +16,10 @@ public interface IWorldMap {
     Object objectAt(Vector2d position);
     String toString();
     List<Animal> getAnimals();
-
-    List<Plant> getPlants();
-
+    List<Vector2d> getEatingPositions();
     Vector2d getLowerLeft();
     Vector2d getUpperRight();
+    Animal getTopAnimalAt(Vector2d position);
+    Animal popTopAnimalAt(Vector2d position);
+    Plant getPlantAt(Vector2d position);
 }

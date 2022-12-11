@@ -1,10 +1,12 @@
-package agh.ics.opp;
+package agh.ics.opp.variants.maps;
+
+import agh.ics.opp.elements.Animal;
+import agh.ics.opp.SimulationSetup;
+import agh.ics.opp.Vector2d;
 
 public class GlobeMap extends AbstractWorldMap{
-    private final SimulationSetup setup;
     public GlobeMap(SimulationSetup setup){
         super(new Vector2d(setup.mapWidth(), setup.mapHeight()));
-        this.setup = setup;
     }
 
     @Override
