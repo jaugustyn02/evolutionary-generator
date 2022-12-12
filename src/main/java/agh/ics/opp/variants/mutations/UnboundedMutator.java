@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class UnboundedMutator implements IGenomeMutator {
     final int minNumOfMutations;
     final int maxNumOfMutations;
-    final int randomMutationAmount;
+    int randomMutationAmount;
 
     public UnboundedMutator(int minNumOfMutations, int maxNumOfMutations) {
         this.minNumOfMutations = minNumOfMutations;
