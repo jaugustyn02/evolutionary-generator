@@ -11,7 +11,7 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalMovementObse
     private final Map<Vector2d, List<Animal>> animals = new HashMap<>();
     private final Map<Vector2d, Plant> plants = new HashMap<>();
     private final Set<Vector2d> eatingPositions = new HashSet<>();
-    private final Set<Vector2d> breedingPositions = new HashSet<>();
+    private final Map<Vector2d, Integer> breedingPositions = new HashMap<>();
     public final static Vector2d lowerLeft = new Vector2d(0 ,0);
     private final Vector2d upperRight;
 
@@ -21,8 +21,7 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalMovementObse
         this.upperRight = upperRight;
     }
 
-    abstract public boolean canMoveTo(Vector2d position);
-    abstract public void correctAnimalPosition(Vector2d oldPosition, Animal animal);
+    abstract public void correctAnimalPosition(Animal animal);
 
     @Override
     public void placeMapElement(IMapElement element) {
@@ -76,6 +75,11 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalMovementObse
     public List<Vector2d> getEatingPositions(){
         return new ArrayList<>(eatingPositions);
     }
+
+//    @Override
+//    public List<Vector2d> getBreedingPositions(){
+//        return new ArrayList<>(breedingPositions);
+//    }
 
     @Override
     public final Vector2d getLowerLeft() {

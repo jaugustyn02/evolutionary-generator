@@ -5,7 +5,6 @@ import agh.ics.opp.SimulationSetup;
 import agh.ics.opp.Vector2d;
 
 public class HellPortalMap extends AbstractWorldMap{
-    
     private final int portalEnergyConsumption;
     
     public HellPortalMap(SimulationSetup setup) {
@@ -14,24 +13,15 @@ public class HellPortalMap extends AbstractWorldMap{
     }
 
     @Override
-    public boolean canMoveTo(Vector2d position) {
-        return  (! (objectAt(position) instanceof Animal));
+    public void correctAnimalPosition(Animal animal) {
+        if(overBorder(animal.getPosition())) {
+            animal.setPosition(Vector2d.getRandom(super.getLowerLeft(), super.getUpperRight()));
+            animal.reduceEnergy(portalEnergyConsumption);
+        }
     }
 
-    @Override
-    public void correctAnimalPosition(Vector2d oldPosition, Animal animal) {
-        if( overBorder(animal.getPosition())) {
-                animal.setPosition(Vector2d.getRandom(super.getLowerLeft(), super.getUpperRight()));
-                animal.reduceEnergy( portalEnergyConsumption);
-        }
-        else{
-            animal.setPosition(oldPosition);
-        }
-    }
     private boolean overBorder(Vector2d position){
         return position.x > super.getUpperRight().x || position.x < super.getLowerLeft().x ||
                 position.y > super.getUpperRight().y || position.y < super.getLowerLeft().y;
     }
-
-
 }

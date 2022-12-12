@@ -17,6 +17,7 @@ public class Animal extends AbstractMapElement{
     private Integer energy;
     private MapDirection direction;
     private int nextGeneIndex;
+    private int numOfDescendants = 0;
 
     private final IAnimalPositionCorrector corrector;
     private final IGenomeMutator mutator;
@@ -39,7 +40,7 @@ public class Animal extends AbstractMapElement{
         this.turnBy(genome[nextGeneIndex]);
         Vector2d oldPosition = this.position;
         this.position = this.position.add(this.direction.toUnitVector());
-        corrector.correctAnimalPosition(oldPosition, this);
+        corrector.correctAnimalPosition(this);
         this.newMovement(oldPosition);
         this.updateNextGeneIndex();
     }
@@ -92,7 +93,6 @@ public class Animal extends AbstractMapElement{
         this.energy -= energy;
     }
     public void increaseEnergy(Integer energy){
-        System.out.println("Zwierzak z pola: "+this.position+" powiedział \"MMMM pyszota!\"");
         this.energy += energy;
     }
     // energy end

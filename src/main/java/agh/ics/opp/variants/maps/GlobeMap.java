@@ -10,29 +10,26 @@ public class GlobeMap extends AbstractWorldMap{
     }
 
     @Override
-    public boolean canMoveTo(Vector2d position) {
-        return position.y >= super.getLowerLeft().y && position.y <= super.getUpperRight().y;
-    }
-
-    @Override
-    public void correctAnimalPosition(Vector2d oldPosition, Animal animal){
-        if (canMoveTo(animal.getPosition())){
-            if (circledFromRight(animal.getPosition()))
-                animal.setPosition(new Vector2d(0, animal.getPosition().y));
-            else if (circledFromLeft(animal.getPosition()))
-                animal.setPosition(new Vector2d(getUpperRight().x, animal.getPosition().y));
+    public void correctAnimalPosition(Animal animal){
+        if (overHorizontalBorders(animal.getPosition())){
+            animal.turnBack();
+            animal.setPosition(animal.getPosition().add(animal.getDirection().toUnitVector()));
         }
         else {
-            animal.setPosition(oldPosition);
-            animal.turnBack();
+            if (overEastBorder(animal.getPosition()))
+                animal.setPosition(new Vector2d(0, animal.getPosition().y));
+            else if (overWestBorder(animal.getPosition()))
+                animal.setPosition(new Vector2d(getUpperRight().x, animal.getPosition().y));
         }
     }
 
-    private boolean circledFromRight(Vector2d position){
+    private boolean overHorizontalBorders(Vector2d position) {
+        return position.y < super.getLowerLeft().y || position.y > super.getUpperRight().y;
+    }
+    private boolean overEastBorder(Vector2d position){
         return position.x > super.getUpperRight().x;
     }
-
-    private boolean circledFromLeft(Vector2d position){
+    private boolean overWestBorder(Vector2d position){
         return position.x < super.getLowerLeft().x;
     }
 }

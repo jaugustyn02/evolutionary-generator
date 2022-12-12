@@ -8,7 +8,6 @@ import agh.ics.opp.elements.Plant;
 import java.util.List;
 
 public interface IWorldMap {
-    boolean canMoveTo(Vector2d position);
     void placeMapElement(IMapElement element);
     void removeMapElement(Vector2d position, IMapElement element);
     boolean isOccupied(Vector2d position);

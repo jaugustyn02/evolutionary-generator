@@ -28,11 +28,15 @@ public class MapUpdater {
     public MapUpdater(IWorldMap map, SimulationSetup setup){
         this.map = map;
         this.setup = setup;
-        this.geneSelector = (setup.animalBehaviorsVariant() ? new ChaoticSelector(setup.genomeLength()):
-                                                              new OrderlySelector(setup.genomeLength()));
-        this.genomeMutator = (setup.mutationsVariant() ? new BoundedMutator(setup.minNumOfMutations(), setup.maxNumOfMutations()):
-                                                         new UnboundedMutator(setup.minNumOfMutations(), setup.maxNumOfMutations()));
-        this.plantPlacementLocator = (setup.plantPreferencesVariant() ? new AntiToxicLocator(map) : new EquatorialLocator(map));
+        this.geneSelector = (setup.animalBehaviorsVariant() ?
+                new ChaoticSelector(setup.genomeLength()):  // true
+                new OrderlySelector(setup.genomeLength())); // false
+        this.genomeMutator = (setup.mutationsVariant() ?
+                new BoundedMutator(setup.minNumOfMutations(), setup.maxNumOfMutations()):       // true
+                new UnboundedMutator(setup.minNumOfMutations(), setup.maxNumOfMutations()));    // false
+        this.plantPlacementLocator = (setup.plantPreferencesVariant() ?
+                new AntiToxicLocator(map):      // true
+                new EquatorialLocator(map));    // false
         this.initMap();
     }
 
@@ -42,22 +46,18 @@ public class MapUpdater {
     }
 
     public void nextDay(){
-        removeCorpses();
+        removeDeadAnimals();
         moveAnimals();
         feedAnimals();
         breedAnimals();
         growPlants();
-        reduceEnergy();
+        consumeDailyEnergy();
     }
 
-    private void growPlants(){
-        generatePlants(setup.numOfPlantsPerDay());
-    }
-
-    private void removeCorpses(){
+    private void removeDeadAnimals(){
         for(Animal animal: map.getAnimals()){
-            if (animal.getEnergy() == 0){
-               map.removeMapElement(animal.getPosition(), animal);
+            if (animal.getEnergy() < 1){
+                map.removeMapElement(animal.getPosition(), animal);
             }
         }
     }
@@ -76,15 +76,20 @@ public class MapUpdater {
     }
 
     private void breedAnimals(){
-
+        // tu dokończyć
     }
 
-    private void reduceEnergy(){
+    private void growPlants(){
+        generatePlants(setup.numOfPlantsPerDay());
+    }
+
+    private void consumeDailyEnergy(){
         for (Animal animal: map.getAnimals()){
             animal.reduceEnergy(1);
         }
     }
 
+    // helper methods
     private void generateAnimals(){
         for (int i=0; i < setup.initialNumOfAnimals(); i++){
             Animal animal = new Animal(getRandomAnimalPosition(), setup.initialAnimalEnergy(), getRandomGenome(), (IAnimalPositionCorrector) map, geneSelector, genomeMutator);
@@ -111,4 +116,33 @@ public class MapUpdater {
         }while (map.isAnimalAt(position));
         return position;
     }
+
+    private int[] getDescendantGenome(Animal parent1, Animal parent2){
+        if(parent1.getEnergy() < parent2.getEnergy()){
+            Animal temp = parent1;
+            parent1 = parent2;
+            parent2 = temp;
+        }
+        int parent1Side = ThreadLocalRandom.current().nextInt(0, 2);
+        int numOfParent1Genes = (int) Math.floor((double)parent1.getEnergy() * setup.genomeLength() / (parent1.getEnergy()+parent2.getEnergy()) + 0.5);
+        int numOfParent2Genes = setup.genomeLength() - numOfParent1Genes;
+        int[] descendantGenome = new int[setup.genomeLength()];
+        System.out.println(parent1Side);
+        if (parent1Side == 0){
+            System.arraycopy(parent1.getGenome(), 0, descendantGenome, 0, numOfParent1Genes);
+            System.arraycopy(parent2.getGenome(), numOfParent1Genes, descendantGenome, numOfParent1Genes, numOfParent2Genes);
+        }
+        else {
+            System.arraycopy(parent2.getGenome(), 0, descendantGenome, 0, numOfParent2Genes);
+            System.arraycopy(parent1.getGenome(), numOfParent2Genes, descendantGenome, numOfParent2Genes, numOfParent1Genes);
+        }
+        return descendantGenome;
+    }
+    private Animal breed2Animals(Animal parent1, Animal parent2){
+        Animal descendant = new Animal(getRandomAnimalPosition(), setup.initialAnimalEnergy(),
+                getDescendantGenome(parent1, parent2), (IAnimalPositionCorrector)map, geneSelector, genomeMutator);
+        descendant.mutate();
+        return descendant;
+    }
+    // helper methods end
 }
