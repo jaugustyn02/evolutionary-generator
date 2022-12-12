@@ -8,6 +8,16 @@ public class ChaoticSelector implements IGeneSelector{
 
     @Override
     public int getNextGeneIndex(int currentGeneIndex) {
-        return 0;
+        int chaoticCheck = (int) (Math.random() * (101));
+        int nextChaoticGene;
+        if (chaoticCheck <=80)
+            return (currentGeneIndex + 1) % this.genomeLength;
+        else {
+            nextChaoticGene = (int) (Math.random() * (this.genomeLength + 1));
+            while (nextChaoticGene == currentGeneIndex+1){
+                nextChaoticGene = (int) (Math.random() * (this.genomeLength + 1));
+            }
+            return nextChaoticGene;
+        }
     }
 }
