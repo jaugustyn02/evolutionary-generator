@@ -11,15 +11,19 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Animal extends AbstractMapElement{
-    private Vector2d position;
     private final int[] genome;
-    private Integer energy;
     private final int fullEnergy;
     private final int energyConsumption;
+
+    private Vector2d position;
+    private Integer energy;
     private MapDirection direction;
     private int nextGeneIndex;
+
+    //stats
     private int numOfDescendants = 0;
     private int age = 0;
+    //stats end
 
     private final IAnimalPositionCorrector corrector;
     private final IGeneSelector selector;

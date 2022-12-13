@@ -18,7 +18,7 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalMovementObse
     private final MapVisualizer mapVisualizer = new MapVisualizer(this);
 
     protected AbstractWorldMap(Vector2d upperRight) {
-        this.upperRight = upperRight;
+        this.upperRight = upperRight.subtract(new Vector2d(1,1));
     }
 
     abstract public void correctAnimalPosition(Animal animal);
@@ -80,7 +80,8 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalMovementObse
     public boolean isOccupied(Vector2d position) {
         return objectAt(position) != null;
     }
-    private boolean isPlantAt(Vector2d position){
+    @Override
+    public boolean isPlantAt(Vector2d position){
         return plants.get(position) != null;
     }
     @Override
