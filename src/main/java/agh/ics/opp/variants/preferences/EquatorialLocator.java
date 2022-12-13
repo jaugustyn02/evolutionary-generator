@@ -3,6 +3,7 @@ package agh.ics.opp.variants.preferences;
 import agh.ics.opp.Vector2d;
 import agh.ics.opp.variants.maps.IWorldMap;
 
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EquatorialLocator implements IPlantPlacementLocator {
@@ -11,8 +12,11 @@ public class EquatorialLocator implements IPlantPlacementLocator {
 
     public EquatorialLocator(IWorldMap map) {
         this.map = map;
-        this.equatorLowerLeft = map.getLowerLeft(); // Temporary
-        this.equatorUpperRight = map.getUpperRight(); // Temporary
+        // lowerLeft.y - 40% height
+        this.equatorLowerLeft = new Vector2d(map.getLowerLeft().x, (int)((map.getUpperRight().y-map.getLowerLeft().y)*0.4));
+        //upperRight.y - 60% height
+        this.equatorUpperRight = new Vector2d(map.getUpperRight().x, (int)((map.getUpperRight().y-map.getLowerLeft().y)*0.6));
+
     }
 
     private Vector2d getRandomPositionFromArea(Vector2d lowerLeft, Vector2d upperRight){
@@ -27,10 +31,14 @@ public class EquatorialLocator implements IPlantPlacementLocator {
 
     public Vector2d getNewPlantPosition(){
         if (ThreadLocalRandom.current().nextInt(0, 5) == 0){ // 20% chance to get position from hole map
-            return getRandomPositionFromArea(map.getLowerLeft(), map.getUpperRight());
+
+            return new Random().nextBoolean() ?
+                    getRandomPositionFromArea(map.getLowerLeft(), new Vector2d(map.getUpperRight().x, equatorLowerLeft.y-1)) :
+                    getRandomPositionFromArea(new Vector2d(map.getLowerLeft().x, equatorUpperRight.y+1), map.getUpperRight());
         }
         else {  // 80% chance to get position from equator
             return getRandomPositionFromArea(equatorLowerLeft, equatorUpperRight);
         }
     }
 }
+
