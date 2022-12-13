@@ -164,7 +164,7 @@ public class MapUpdater implements IMapUpdater{
         strongerParent.hasBred();
         weakerParent.hasBred();
         return new Animal(strongerParent.getPosition(), (setup.animalEnergyConsumption()*2), setup.fullAnimalEnergy(),
-                setup.animalEnergyConsumption(), genomeMutator.mutateGenome(getDescendantGenome(strongerParent, weakerParent)),
+                setup.animalEnergyConsumption(), genomeMutator.getMutatedGenome(getDescendantGenome(strongerParent, weakerParent)),
                 (IAnimalPositionCorrector)map, geneSelector);
     }
     // helper methods end
