@@ -6,6 +6,7 @@ import agh.ics.opp.variants.behaviours.OrderlySelector;
 import agh.ics.opp.elements.Animal;
 import agh.ics.opp.elements.IMapElement;
 import agh.ics.opp.elements.Plant;
+import agh.ics.opp.variants.maps.IAnimalMovementObserver;
 import agh.ics.opp.variants.maps.IAnimalPositionCorrector;
 import agh.ics.opp.variants.maps.IWorldMap;
 import agh.ics.opp.variants.mutations.BoundedMutator;
@@ -15,10 +16,10 @@ import agh.ics.opp.variants.preferences.AntiToxicLocator;
 import agh.ics.opp.variants.preferences.EquatorialLocator;
 import agh.ics.opp.variants.preferences.IPlantPlacementLocator;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class MapUpdater {
+public class MapUpdater implements IMapUpdater{
     private final IWorldMap map;
     private final SimulationSetup setup;
     private final IGeneSelector geneSelector;
@@ -37,10 +38,10 @@ public class MapUpdater {
         this.plantPlacementLocator = (setup.plantPreferencesVariant() ?
                 new AntiToxicLocator(map):      // true
                 new EquatorialLocator(map));    // false
-        this.initMap();
+        this.initializeMap();
     }
 
-    private void initMap(){
+    private void initializeMap(){
         generateAnimals();
         generatePlants(setup.initialNumOfPlants());
     }
@@ -51,7 +52,7 @@ public class MapUpdater {
         feedAnimals();
         breedAnimals();
         growPlants();
-        consumeDailyEnergy();
+        endOfDay();
     }
 
     private void removeDeadAnimals(){
@@ -76,23 +77,43 @@ public class MapUpdater {
     }
 
     private void breedAnimals(){
-        // tu dokończyć
+        List<Animal> animalsToPlaceOnMap = new ArrayList<>();
+        for (Vector2d position: map.getAnimalsPositions()) {
+            Animal parent1 = map.popTopAnimalAt(position);
+            Animal parent2 = map.popTopAnimalAt(position);
+            while (parent2 != null && parent2.isBreedable()) {
+                Animal descendant = breed2Animals(parent1, parent2);
+                animalsToPlaceOnMap.add(parent1);
+                animalsToPlaceOnMap.add(parent2);
+                if(descendant != null)
+                    animalsToPlaceOnMap.add(descendant);
+                parent1 = map.popTopAnimalAt(position);
+                parent2 = map.popTopAnimalAt(position);
+            }
+            if (parent1 != null)
+                animalsToPlaceOnMap.add(parent1);
+        }
+        for (Animal animal: animalsToPlaceOnMap){
+            map.placeMapElement(animal);
+        }
     }
 
     private void growPlants(){
         generatePlants(setup.numOfPlantsPerDay());
     }
 
-    private void consumeDailyEnergy(){
+    private void endOfDay(){
         for (Animal animal: map.getAnimals()){
-            animal.reduceEnergy(1);
+            animal.hasLivedDay();
         }
     }
+
 
     // helper methods
     private void generateAnimals(){
         for (int i=0; i < setup.initialNumOfAnimals(); i++){
-            Animal animal = new Animal(getRandomAnimalPosition(), setup.initialAnimalEnergy(), getRandomGenome(), (IAnimalPositionCorrector) map, geneSelector, genomeMutator);
+            Animal animal = new Animal(getRandomAnimalPosition(), setup.initialAnimalEnergy(), setup.fullAnimalEnergy(),
+                    setup.animalEnergyConsumption(), getRandomGenome(), (IAnimalPositionCorrector) map, geneSelector);
             animal.addObserver((IAnimalMovementObserver) map);
             map.placeMapElement(animal);
         }
@@ -117,32 +138,34 @@ public class MapUpdater {
         return position;
     }
 
-    private int[] getDescendantGenome(Animal parent1, Animal parent2){
-        if(parent1.getEnergy() < parent2.getEnergy()){
-            Animal temp = parent1;
-            parent1 = parent2;
-            parent2 = temp;
-        }
-        int parent1Side = ThreadLocalRandom.current().nextInt(0, 2);
-        int numOfParent1Genes = (int) Math.floor((double)parent1.getEnergy() * setup.genomeLength() / (parent1.getEnergy()+parent2.getEnergy()) + 0.5);
-        int numOfParent2Genes = setup.genomeLength() - numOfParent1Genes;
+    // parent1.energy >= parent2.energy
+    private int[] getDescendantGenome(Animal strongerParent, Animal weakerParent){
+        int strongerSide = ThreadLocalRandom.current().nextInt(0, 2);
+        int strongerNumOfGenes = (int) Math.floor((double)strongerParent.getEnergy() * setup.genomeLength() / (strongerParent.getEnergy()+weakerParent.getEnergy()) + 0.5);
+        int weakerNumOfGenes = setup.genomeLength() - strongerNumOfGenes;
+
         int[] descendantGenome = new int[setup.genomeLength()];
-        System.out.println(parent1Side);
-        if (parent1Side == 0){
-            System.arraycopy(parent1.getGenome(), 0, descendantGenome, 0, numOfParent1Genes);
-            System.arraycopy(parent2.getGenome(), numOfParent1Genes, descendantGenome, numOfParent1Genes, numOfParent2Genes);
+        if (strongerSide == 0){
+            System.arraycopy(strongerParent.getGenome(), 0, descendantGenome, 0, strongerNumOfGenes);
+            System.arraycopy(weakerParent.getGenome(), strongerNumOfGenes, descendantGenome, strongerNumOfGenes, weakerNumOfGenes);
         }
         else {
-            System.arraycopy(parent2.getGenome(), 0, descendantGenome, 0, numOfParent2Genes);
-            System.arraycopy(parent1.getGenome(), numOfParent2Genes, descendantGenome, numOfParent2Genes, numOfParent1Genes);
+            System.arraycopy(weakerParent.getGenome(), 0, descendantGenome, 0, weakerNumOfGenes);
+            System.arraycopy(strongerParent.getGenome(), weakerNumOfGenes, descendantGenome, weakerNumOfGenes, strongerNumOfGenes);
         }
         return descendantGenome;
     }
-    private Animal breed2Animals(Animal parent1, Animal parent2){
-        Animal descendant = new Animal(getRandomAnimalPosition(), setup.initialAnimalEnergy(),
-                getDescendantGenome(parent1, parent2), (IAnimalPositionCorrector)map, geneSelector, genomeMutator);
-        descendant.mutate();
-        return descendant;
+
+    private Animal breed2Animals(Animal strongerParent, Animal weakerParent){
+        if(!strongerParent.isBreedable() || !weakerParent.isBreedable()){
+            System.out.println("At least one parent is not breedable");
+            return null;
+        }
+        strongerParent.hasBred();
+        weakerParent.hasBred();
+        return new Animal(strongerParent.getPosition(), (setup.animalEnergyConsumption()*2), setup.fullAnimalEnergy(),
+                setup.animalEnergyConsumption(), genomeMutator.mutateGenome(getDescendantGenome(strongerParent, weakerParent)),
+                (IAnimalPositionCorrector)map, geneSelector);
     }
     // helper methods end
 }

@@ -10,7 +10,7 @@ public class UnboundedMutator implements IGenomeMutator {
     }
 
     @Override
-    public int[] getMutatedGenome(int[] genome) {
+    public int[] mutateGenome(int[] genome) {
         return genome;
     }
 }

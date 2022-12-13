@@ -14,6 +14,7 @@ public interface IWorldMap {
     Object objectAt(Vector2d position);
     String toString();
     List<Animal> getAnimals();
+    List<Vector2d> getAnimalsPositions();
     List<Vector2d> getEatingPositions();
     Vector2d getLowerLeft();
     Vector2d getUpperRight();

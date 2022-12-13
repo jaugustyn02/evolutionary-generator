@@ -10,7 +10,7 @@ public class BoundedMutator implements IGenomeMutator {
     }
 
     @Override
-    public int[] getMutatedGenome(int[] genome) {
-        return new int[0];
+    public int[] mutateGenome(int[] genome) {
+        return genome;
     }
 }

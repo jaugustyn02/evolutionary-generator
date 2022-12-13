@@ -22,6 +22,7 @@ public class SimulationEngine implements IEngine, Runnable{
     public void run() {
         for (int i=0; i<5; i++){
             updater.nextDay();
+            System.out.println("Day "+i+":");
             System.out.println(map);
         }
 

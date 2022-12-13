@@ -1,11 +1,10 @@
 package agh.ics.opp.elements;
 
-import agh.ics.opp.IAnimalMovementObserver;
+import agh.ics.opp.variants.maps.IAnimalMovementObserver;
 import agh.ics.opp.MapDirection;
 import agh.ics.opp.Vector2d;
 import agh.ics.opp.variants.behaviours.IGeneSelector;
 import agh.ics.opp.variants.maps.IAnimalPositionCorrector;
-import agh.ics.opp.variants.mutations.IGenomeMutator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,25 +12,28 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Animal extends AbstractMapElement{
     private Vector2d position;
-    private int[] genome;
+    private final int[] genome;
     private Integer energy;
+    private final int fullEnergy;
+    private final int energyConsumption;
     private MapDirection direction;
     private int nextGeneIndex;
     private int numOfDescendants = 0;
+    private int age = 0;
 
     private final IAnimalPositionCorrector corrector;
-    private final IGenomeMutator mutator;
     private final IGeneSelector selector;
     private final List<IAnimalMovementObserver> observers = new ArrayList<>();
 
-    public Animal(Vector2d position, Integer initEnergy, int[] genome, IAnimalPositionCorrector corrector, IGeneSelector selector, IGenomeMutator mutator){
+    public Animal(Vector2d position, Integer initEnergy, int fullEnergy, int energyConsumption, int[] genome,
+                  IAnimalPositionCorrector corrector, IGeneSelector selector){
         this.position = position;
         this.energy = initEnergy;
+        this.fullEnergy = fullEnergy;
+        this.energyConsumption = energyConsumption;
         this.genome = genome;
         this.corrector = corrector;
         this.selector = selector;
-        this.mutator = mutator;
-
         this.nextGeneIndex = ThreadLocalRandom.current().nextInt(0, genome.length);
         this.direction = MapDirection.getRandom();
     }
@@ -64,9 +66,6 @@ public class Animal extends AbstractMapElement{
     // position end
 
     // genome
-    public void mutate(){
-        this.genome = mutator.getMutatedGenome(genome);
-    }
     public int[] getGenome(){
         return this.genome;
     }
@@ -79,23 +78,32 @@ public class Animal extends AbstractMapElement{
     // direction end
 
     // nextGeneIndex
-    public int getNextGeneIndex(){
-        return this.nextGeneIndex;
-    }
     private void updateNextGeneIndex() {
         this.nextGeneIndex = selector.getNextGeneIndex(this.nextGeneIndex);
     }
     // nextGeneIndex end
 
     // energy
-    public int getEnergy(){ return this.energy; }
+    public Integer getEnergy(){ return this.energy; }
     public void reduceEnergy(Integer energy){
         this.energy -= energy;
     }
     public void increaseEnergy(Integer energy){
         this.energy += energy;
     }
+    public boolean isBreedable(){
+        return this.energy >= this.fullEnergy;
+    }
     // energy end
+
+    public void hasBred(){
+        reduceEnergy(energyConsumption);
+        numOfDescendants++;
+    }
+    public void hasLivedDay(){
+        reduceEnergy(1);
+        age++;
+    }
 
     // observers
     public void addObserver(IAnimalMovementObserver observer){
@@ -106,6 +114,14 @@ public class Animal extends AbstractMapElement{
             observer.animalMadeMove(oldPosition, this);
     }
     // observers end
+
+    public Integer getNumOfDescendants() {
+        return numOfDescendants;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
 
     public String toString(){
 //        return direction.toString();
