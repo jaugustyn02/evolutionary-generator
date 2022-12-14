@@ -14,8 +14,10 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalMovementObse
     private final Set<Vector2d> eatingPositions = new HashSet<>();
     public final static Vector2d lowerLeft = new Vector2d(0 ,0);
     private final Vector2d upperRight;
-
     private final MapVisualizer mapVisualizer = new MapVisualizer(this);
+
+
+    public int currentPlantsNumber;
 
     protected AbstractWorldMap(Vector2d upperRight) {
         this.upperRight = upperRight.subtract(new Vector2d(1,1));
@@ -126,4 +128,12 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalMovementObse
         System.out.println(animals);
         return mapVisualizer.draw(this.getLowerLeft(), this.getUpperRight());
     }
+    public int getCurrentPlantsNumber(){
+        return currentPlantsNumber;
+    }
+    public void addCurrentPlantsNumber(){
+        this.currentPlantsNumber += 1;
+
+    }
+
 }
