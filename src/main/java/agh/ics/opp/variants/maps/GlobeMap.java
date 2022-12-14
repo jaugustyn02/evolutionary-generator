@@ -5,8 +5,13 @@ import agh.ics.opp.SimulationSetup;
 import agh.ics.opp.Vector2d;
 
 public class GlobeMap extends AbstractWorldMap{
+    private final int width;
+    private final int height;
     public GlobeMap(SimulationSetup setup){
         super(new Vector2d(setup.mapWidth(), setup.mapHeight()));
+        this.currentPlantsNumber = setup.initialNumOfPlants();
+        this.width = setup.mapWidth();
+        this.height = setup.mapHeight();
     }
 
     @Override
@@ -31,5 +36,12 @@ public class GlobeMap extends AbstractWorldMap{
     }
     private boolean overWestBorder(Vector2d position){
         return position.x < super.getLowerLeft().x;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
     }
 }
