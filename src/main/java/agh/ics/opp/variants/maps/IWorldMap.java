@@ -24,4 +24,9 @@ public interface IWorldMap {
 
     boolean isAnimalAt(Vector2d position);
     boolean isPlantAt(Vector2d position);
+    int getWidth();
+    int getHeight();
+    int getCurrentPlantsNumber();
+    void addCurrentPlantsNumber();
 }
+
