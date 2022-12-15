@@ -1,6 +1,6 @@
 package agh.ics.opp.elements;
 
-import agh.ics.opp.variants.maps.IAnimalMovementObserver;
+import agh.ics.opp.IAnimalChangeObserver;
 import agh.ics.opp.MapDirection;
 import agh.ics.opp.Vector2d;
 import agh.ics.opp.variants.behaviours.IGeneSelector;
@@ -22,12 +22,13 @@ public class Animal extends AbstractMapElement{
 
     //stats
     private int numOfDescendants = 0;
+    private int numOfEatenPlants = 0;
     private int age = 0;
     //stats end
 
     private final IAnimalPositionCorrector corrector;
     private final IGeneSelector selector;
-    private final List<IAnimalMovementObserver> observers = new ArrayList<>();
+    private final List<IAnimalChangeObserver> observers = new ArrayList<>();
 
     public Animal(Vector2d position, Integer initEnergy, int fullEnergy, int energyConsumption, int[] genome,
                   IAnimalPositionCorrector corrector, IGeneSelector selector){
@@ -43,12 +44,12 @@ public class Animal extends AbstractMapElement{
     }
     
     public void makeMove(){
+        beforeChange();
         this.turnBy(genome[nextGeneIndex]);
-        Vector2d oldPosition = this.position;
         this.position = this.position.add(this.direction.toUnitVector());
         corrector.correctAnimalPosition(this);
-        this.newMovement(oldPosition);
         this.updateNextGeneIndex();
+        afterChange();
     }
 
     // direction
@@ -90,7 +91,7 @@ public class Animal extends AbstractMapElement{
     // energy
     public Integer getEnergy(){ return this.energy; }
     public void reduceEnergy(Integer energy){
-        this.energy -= energy;
+        this.energy = Math.max(this.energy-energy, 0);
     }
     public void increaseEnergy(Integer energy){
         this.energy += energy;
@@ -100,24 +101,36 @@ public class Animal extends AbstractMapElement{
     }
     // energy end
 
+    public void hasEaten(int gainedEnergy){
+        beforeChange();
+        increaseEnergy(gainedEnergy);
+        numOfEatenPlants++;
+        afterChange();
+    }
     public void hasBred(){
         reduceEnergy(energyConsumption);
         numOfDescendants++;
     }
     public void hasLivedDay(){
+        beforeChange();
         reduceEnergy(1);
         age++;
+        afterChange();
     }
 
-    // observers
-    public void addObserver(IAnimalMovementObserver observer){
+    // Observers
+    public void addObserver(IAnimalChangeObserver observer){
         observers.add(observer);
     }
-    private void newMovement(Vector2d oldPosition){
-        for(IAnimalMovementObserver observer: observers)
-            observer.animalMadeMove(oldPosition, this);
+    private void beforeChange(){
+        for(IAnimalChangeObserver observer: observers)
+            observer.animalBeforeChange(this);
     }
-    // observers end
+    private void afterChange(){
+        for(IAnimalChangeObserver observer: observers)
+            observer.animalAfterChange(this);
+    }
+    // Observers end
 
     public Integer getNumOfDescendants() {
         return numOfDescendants;
@@ -130,6 +143,7 @@ public class Animal extends AbstractMapElement{
     public String toString(){
 //        return direction.toString();
         return energy.toString();
+//        return ((Integer)genome[0]).toString();
     }
 
     // gui

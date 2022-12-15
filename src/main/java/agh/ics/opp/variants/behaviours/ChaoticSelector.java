@@ -1,5 +1,7 @@
 package agh.ics.opp.variants.behaviours;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class ChaoticSelector implements IGeneSelector{
     private final int genomeLength;
     public ChaoticSelector(int genomeLength) {
@@ -8,15 +10,15 @@ public class ChaoticSelector implements IGeneSelector{
 
     @Override
     public int getNextGeneIndex(int currentGeneIndex) {
-        int chaoticCheck = (int) (Math.random() * (101));
+        int chaoticCheck = ThreadLocalRandom.current().nextInt(0, 5);
+        int rightNextGeneIndex = (currentGeneIndex + 1) % this.genomeLength;
         int nextChaoticGene;
-        if (chaoticCheck <=80)
-            return (currentGeneIndex + 1) % this.genomeLength;
+        if (chaoticCheck < 4)
+            return rightNextGeneIndex;
         else {
-            nextChaoticGene = (int) (Math.random() * (this.genomeLength + 1));
-            while (nextChaoticGene == currentGeneIndex+1){
-                nextChaoticGene = (int) (Math.random() * (this.genomeLength + 1));
-            }
+            do {
+                nextChaoticGene = ThreadLocalRandom.current().nextInt(0, genomeLength);
+            } while (nextChaoticGene == rightNextGeneIndex);
             return nextChaoticGene;
         }
     }

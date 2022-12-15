@@ -13,8 +13,8 @@ public class Vector2d {
 
     public static Vector2d getRandom(Vector2d lowerLeft, Vector2d upperRight){
         return new Vector2d(
-            ThreadLocalRandom.current().nextInt(lowerLeft.x, upperRight.x),
-            ThreadLocalRandom.current().nextInt(lowerLeft.y, upperRight.y)
+            ThreadLocalRandom.current().nextInt(lowerLeft.x, upperRight.x+1),
+            ThreadLocalRandom.current().nextInt(lowerLeft.y, upperRight.y+1)
         );
     }
 

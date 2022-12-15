@@ -3,10 +3,10 @@ package agh.ics.opp;
 public class World {
     public static void main(String[] args){
         SimulationSetup setup = new SimulationSetup(
-                false, 7, 7,
-                false, 4, 2, 3,
-                false, 5, 10, 5, 3, 10,
-                false, 0, 0
+                true, 6, 6,
+                false, 4, 5, 3,
+                true, 7, 10, 4, 3, 10,
+                true, 1, 5
         );
         IEngine engine = new SimulationEngine(setup);
         engine.run();

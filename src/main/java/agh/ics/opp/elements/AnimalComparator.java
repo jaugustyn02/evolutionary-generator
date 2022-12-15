@@ -10,6 +10,8 @@ public class AnimalComparator implements Comparator<Animal> {
             return -o1.getEnergy().compareTo(o2.getEnergy());
         if (!Objects.equals(o1.getAge(), o2.getAge()))
             return -o1.getAge().compareTo(o2.getAge());
-        return -o1.getNumOfDescendants().compareTo(o2.getNumOfDescendants());
+        if (!Objects.equals(o1.getNumOfDescendants(), o2.getNumOfDescendants()))
+            return -o1.getNumOfDescendants().compareTo(o2.getNumOfDescendants());
+        return (o1 == o2 ? 0 : -1);
     }
 }
