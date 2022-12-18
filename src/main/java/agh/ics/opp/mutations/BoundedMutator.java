@@ -1,13 +1,14 @@
-package agh.ics.opp.variants.mutations;
+package agh.ics.opp.mutations;
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class UnboundedMutator implements IGenomeMutator {
+
+public class BoundedMutator implements IGenomeMutator {
     final int minNumOfMutations;
     final int maxNumOfMutations;
 
-    public UnboundedMutator(int minNumOfMutations, int maxNumOfMutations) {
+    public BoundedMutator(int minNumOfMutations, int maxNumOfMutations) {
         this.minNumOfMutations = minNumOfMutations;
         this.maxNumOfMutations = maxNumOfMutations;
     }
@@ -15,18 +16,23 @@ public class UnboundedMutator implements IGenomeMutator {
     @Override
     public int[] getMutatedGenome(int[] genome) {
         int randomNumOfMutations = ThreadLocalRandom.current().nextInt(minNumOfMutations, maxNumOfMutations+1);
+//        System.out.println("Genom przechodzi mutacje "+randomNumOfMutations+" genów z "+Arrays.toString(genome));
         int changesCounter = 0;
         int indexToMutate;
+        int newGene;
         boolean[] changedGenes = new boolean[genome.length];
         Arrays.fill(changedGenes, Boolean.FALSE);
         while (changesCounter < randomNumOfMutations){
             indexToMutate = ThreadLocalRandom.current().nextInt(0, genome.length);
             if (!changedGenes[indexToMutate]){
-                genome[indexToMutate] = ThreadLocalRandom.current().nextInt(0, 8);
+                int plusMinus = ThreadLocalRandom.current().nextBoolean() ? 1 : -1;
+                newGene = (genome[indexToMutate]+ plusMinus) % 8;
+                genome[indexToMutate] = newGene!=-1 ? newGene : 7;
                 changesCounter++;
                 changedGenes[indexToMutate] = true;
             }
         }
+//        System.out.println("                                na "+Arrays.toString(genome));
         return genome;
     }
 }

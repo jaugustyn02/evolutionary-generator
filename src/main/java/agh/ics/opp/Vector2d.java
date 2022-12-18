@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-public class Vector2d {
+public class Vector2d implements Comparable<Vector2d> {
     public final int x, y;
     public Vector2d(int x, int y){
         this.x = x;
@@ -57,5 +57,12 @@ public class Vector2d {
 
     public Vector2d copy(){
         return new Vector2d(this.x, this.y);
+    }
+
+    @Override
+    public int compareTo(Vector2d other) {
+        if (this == other) return 0;
+        if (this.x != other.x) return Integer.compare(this.x, other.x);
+        return Integer.compare(this.y, other.y);
     }
 }

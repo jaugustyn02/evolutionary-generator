@@ -1,6 +1,6 @@
 package agh.ics.opp;
 
-import agh.ics.opp.variants.maps.IWorldMap;
+import agh.ics.opp.maps.IWorldMap;
 
 /**
  * The map visualizer converts the {@link IWorldMap} map into a string

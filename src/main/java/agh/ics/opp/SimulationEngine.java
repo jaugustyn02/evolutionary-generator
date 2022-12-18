@@ -2,9 +2,9 @@ package agh.ics.opp;
 
 //import agh.ics.oop.gui.MapRenderer;
 
-import agh.ics.opp.variants.maps.GlobeMap;
-import agh.ics.opp.variants.maps.HellPortalMap;
-import agh.ics.opp.variants.maps.IWorldMap;
+import agh.ics.opp.maps.GlobeMap;
+import agh.ics.opp.maps.HellPortalMap;
+import agh.ics.opp.maps.IWorldMap;
 
 public class SimulationEngine implements IEngine, Runnable{
     private final IWorldMap map;
@@ -13,14 +13,16 @@ public class SimulationEngine implements IEngine, Runnable{
 //    private final MapRenderer renderer;
 
     public SimulationEngine(SimulationSetup setup) {
-        this.map = (setup.mapVariant() ? new HellPortalMap(setup) : new GlobeMap(setup));
+        this.map = (setup.mapVariant() ?
+                new HellPortalMap(setup) :  // true
+                new GlobeMap(setup));       // false
         this.updater = new MapUpdater(map, setup);
         System.out.println(map);
     }
 
     @Override
     public void run() {
-        for (int i=0; i<5; i++){
+        for (int i=0; i<10; i++){
             updater.nextDay();
             System.out.println("Day "+(i+1)+":");
             System.out.println(map);

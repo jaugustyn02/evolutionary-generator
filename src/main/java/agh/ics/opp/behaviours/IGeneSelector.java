@@ -1,4 +1,4 @@
-package agh.ics.opp.variants.behaviours;
+package agh.ics.opp.behaviours;
 
 public interface IGeneSelector {
     int getNextGeneIndex(int currentGeneIndex);

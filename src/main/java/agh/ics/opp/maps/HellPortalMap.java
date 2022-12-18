@@ -1,4 +1,4 @@
-package agh.ics.opp.variants.maps;
+package agh.ics.opp.maps;
 
 import agh.ics.opp.elements.Animal;
 import agh.ics.opp.SimulationSetup;
@@ -15,10 +15,8 @@ public class HellPortalMap extends AbstractWorldMap{
     @Override
     public void correctAnimalPosition(Animal animal) {
         if(overBorder(animal.getPosition())) {
-            Vector2d oldPosition = animal.getPosition(); // for sout
             animal.setPosition(Vector2d.getRandom(super.getLowerLeft(), super.getUpperRight()));
             animal.reduceEnergy(portalEnergyConsumption);
-            System.out.println("Portal przeteleportował zwierzę z "+oldPosition+" na "+animal.getPosition()); // to show that works
         }
     }
 

@@ -1,13 +1,10 @@
 package agh.ics.opp.elements;
 
-import agh.ics.opp.IAnimalChangeObserver;
 import agh.ics.opp.MapDirection;
 import agh.ics.opp.Vector2d;
-import agh.ics.opp.variants.behaviours.IGeneSelector;
-import agh.ics.opp.variants.maps.IAnimalPositionCorrector;
+import agh.ics.opp.behaviours.IGeneSelector;
+import agh.ics.opp.maps.IAnimalPositionCorrector;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Animal extends AbstractMapElement{
@@ -28,7 +25,6 @@ public class Animal extends AbstractMapElement{
 
     private final IAnimalPositionCorrector corrector;
     private final IGeneSelector selector;
-    private final List<IAnimalChangeObserver> observers = new ArrayList<>();
 
     public Animal(Vector2d position, Integer initEnergy, int fullEnergy, int energyConsumption, int[] genome,
                   IAnimalPositionCorrector corrector, IGeneSelector selector){
@@ -44,12 +40,10 @@ public class Animal extends AbstractMapElement{
     }
     
     public void makeMove(){
-        beforeChange();
         this.turnBy(genome[nextGeneIndex]);
         this.position = this.position.add(this.direction.toUnitVector());
         corrector.correctAnimalPosition(this);
         this.updateNextGeneIndex();
-        afterChange();
     }
 
     // direction
@@ -65,22 +59,7 @@ public class Animal extends AbstractMapElement{
     public void setPosition(Vector2d position){
         this.position = position;
     }
-    public Vector2d getPosition() {
-        return this.position;
-    }
     // position end
-
-    // genome
-    public int[] getGenome(){
-        return this.genome;
-    }
-    // genome end
-
-    // direction
-    public MapDirection getDirection(){
-        return this.direction;
-    }
-    // direction end
 
     // nextGeneIndex
     private void updateNextGeneIndex() {
@@ -89,7 +68,6 @@ public class Animal extends AbstractMapElement{
     // nextGeneIndex end
 
     // energy
-    public Integer getEnergy(){ return this.energy; }
     public void reduceEnergy(Integer energy){
         this.energy = Math.max(this.energy-energy, 0);
     }
@@ -100,52 +78,50 @@ public class Animal extends AbstractMapElement{
         return this.energy >= this.fullEnergy;
     }
     // energy end
-
     public void hasEaten(int gainedEnergy){
-        beforeChange();
         increaseEnergy(gainedEnergy);
         numOfEatenPlants++;
-        afterChange();
     }
     public void hasBred(){
         reduceEnergy(energyConsumption);
         numOfDescendants++;
     }
     public void hasLivedDay(){
-        beforeChange();
         reduceEnergy(1);
         age++;
-        afterChange();
     }
 
-    // Observers
-    public void addObserver(IAnimalChangeObserver observer){
-        observers.add(observer);
-    }
-    private void beforeChange(){
-        for(IAnimalChangeObserver observer: observers)
-            observer.animalBeforeChange(this);
-    }
-    private void afterChange(){
-        for(IAnimalChangeObserver observer: observers)
-            observer.animalAfterChange(this);
-    }
-    // Observers end
-
-    public Integer getNumOfDescendants() {
+    public int getNumOfDescendants() {
         return numOfDescendants;
     }
-
-    public Integer getAge() {
+    public int getAge() {
         return age;
+    }
+    public int getEnergyConsumption(){
+        return this.energyConsumption;
+    }
+    public MapDirection getDirection(){
+        return this.direction;
+    }
+    public int[] getGenome(){
+        return this.genome;
+    }
+    public Vector2d getPosition() {
+        return this.position;
+    }
+    public int getEnergy(){ return this.energy; }
+    public int getNumOfEatenPlants() {
+        return numOfEatenPlants;
+    }
+    public int getNextGeneIndex(){
+        return nextGeneIndex;
     }
 
     public String toString(){
-//        return direction.toString();
+//        return this.position.toString();
+//        return "{"+energy+","+age+","+numOfDescendants+":"+position+"}";
         return energy.toString();
-//        return ((Integer)genome[0]).toString();
     }
-
     // gui
     public String getImagePath() {
         return null;
@@ -155,4 +131,3 @@ public class Animal extends AbstractMapElement{
     }
     // gui end
 }
-// test

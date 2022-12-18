@@ -1,4 +1,4 @@
-package agh.ics.opp.variants.maps;
+package agh.ics.opp.maps;
 
 import agh.ics.opp.elements.Animal;
 

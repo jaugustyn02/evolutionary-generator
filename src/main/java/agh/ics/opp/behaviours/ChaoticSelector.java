@@ -1,4 +1,4 @@
-package agh.ics.opp.variants.behaviours;
+package agh.ics.opp.behaviours;
 
 import java.util.concurrent.ThreadLocalRandom;
 

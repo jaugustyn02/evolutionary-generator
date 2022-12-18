@@ -1,4 +1,4 @@
-package agh.ics.opp.variants.mutations;
+package agh.ics.opp.mutations;
 
 public interface IGenomeMutator {
     int[] getMutatedGenome(int[] genome);
