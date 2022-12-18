@@ -118,9 +118,8 @@ public class Animal extends AbstractMapElement{
     }
 
     public String toString(){
-//        return this.position.toString();
-//        return "{"+energy+","+age+","+numOfDescendants+":"+position+"}";
         return energy.toString();
+//        return "{"+energy+","+age+","+numOfDescendants+":"+position+"}";
     }
     // gui
     public String getImagePath() {
