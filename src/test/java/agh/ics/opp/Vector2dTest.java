@@ -1,5 +1,6 @@
 package agh.ics.opp;
 
+import agh.ics.opp.simulation.types.Vector2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
