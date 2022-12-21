@@ -1,10 +1,10 @@
 package agh.ics.opp;
 
-import agh.ics.opp.simulation.maps.IMapUpdater;
-import agh.ics.opp.simulation.maps.MapUpdater;
-import agh.ics.opp.simulation.maps.GlobeMap;
-import agh.ics.opp.simulation.maps.HellPortalMap;
-import agh.ics.opp.simulation.maps.IWorldMap;
+import agh.ics.opp.simulation.map.IMapUpdater;
+import agh.ics.opp.simulation.map.MapUpdater;
+import agh.ics.opp.simulation.map.GlobeMap;
+import agh.ics.opp.simulation.map.HellPortalMap;
+import agh.ics.opp.simulation.map.IWorldMap;
 import agh.ics.opp.simulation.types.SimulationSetup;
 import org.junit.jupiter.api.Test;
 

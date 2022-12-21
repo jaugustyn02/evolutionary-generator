@@ -2,8 +2,8 @@ package agh.ics.opp.simulation;
 
 
 import agh.ics.opp.simulation.gui.MapRenderer;
-import agh.ics.opp.simulation.maps.IWorldMap;
-import agh.ics.opp.simulation.maps.MapUpdater;
+import agh.ics.opp.simulation.map.IWorldMap;
+import agh.ics.opp.simulation.map.MapUpdater;
 import agh.ics.opp.simulation.types.SimulationSetup;
 
 public class SimulationEngine implements IEngine, Runnable{

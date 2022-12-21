@@ -1,6 +1,6 @@
 package agh.ics.opp.simulation.types;
 
-import agh.ics.opp.simulation.maps.elements.animal.Animal;
+import agh.ics.opp.simulation.map.elements.animal.Animal;
 
 import java.util.ArrayList;
 import java.util.Comparator;

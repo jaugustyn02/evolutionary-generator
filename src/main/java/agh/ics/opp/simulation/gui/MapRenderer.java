@@ -1,7 +1,7 @@
 package agh.ics.opp.simulation.gui;
 
-import agh.ics.opp.simulation.maps.elements.IMapElement;
-import agh.ics.opp.simulation.maps.IWorldMap;
+import agh.ics.opp.simulation.map.elements.IMapElement;
+import agh.ics.opp.simulation.map.IWorldMap;
 import agh.ics.opp.simulation.types.Vector2d;
 import javafx.application.Platform;
 import javafx.geometry.HPos;

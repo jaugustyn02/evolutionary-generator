@@ -1,7 +1,7 @@
 package agh.ics.opp.simulation.gui;
 
-import agh.ics.opp.simulation.maps.elements.animal.Animal;
-import agh.ics.opp.simulation.maps.elements.IMapElement;
+import agh.ics.opp.simulation.map.elements.animal.Animal;
+import agh.ics.opp.simulation.map.elements.IMapElement;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
