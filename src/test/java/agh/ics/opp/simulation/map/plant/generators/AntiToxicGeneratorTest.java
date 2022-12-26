@@ -14,69 +14,70 @@ public class AntiToxicGeneratorTest {
     @Test
     public void testGeneratePlant() {
 
-        SimulationSetup setup = new SimulationSetup(false, 100, 100, false, 0, 0, 0, false, 0, 0, 0, 0, 0, false, 0, 0);
+        SimulationSetup setup = new SimulationSetup(false, 100, 100, false, 0, 0, 1, false,
+                0, 0, 0, 0, 0, false, 0, 0);
         GlobeMap map = new GlobeMap(setup);
         int plantEnergy = 10;
         AntiToxicGenerator generator = new AntiToxicGenerator(map, plantEnergy);
-
-
         Plant plant = generator.generatePlant();
 
 
         assertNotNull(plant);
         assertEquals(plantEnergy, plant.getEnergy());
     }
-//    @Test
-//    public void testPlantRemoved() {
-//
-//        int mapH = 10;
-//        int mapW = 10;
-//        SimulationSetup setup = new SimulationSetup(false, mapH, mapW, false, 0, 0, 0, false, 0, 0, 0, 0, 0, false, 0, 0);
-//        GlobeMap map = new GlobeMap(setup);
-//        int plantEnergy = 10;
-//        AntiToxicGenerator generator = new AntiToxicGenerator(map, plantEnergy);
-//        Plant plant = new Plant(new Vector2d(1, 1), plantEnergy);
-//
-//        generator.plantRemoved(plant);
-//
-//        assertTrue(generator.getEmptySquares().contains(plant.getPosition()));
-//        assertEquals(1,mapH*mapW - generator.getNumOfZeroDeathsEmptySquares());
-//    }
 
-//    @Test
-//    public void testPlantPlaced() {
-//        // given
-//        SimulationSetup setup = new SimulationSetup(false, 100, 100, false, 0, 0, 0, false, 0, 0, 0, 0, 0, false, 0, 0);
-//        GlobeMap map = new GlobeMap(setup);
-//        int plantEnergy = 10;
-//        AntiToxicGenerator generator = new AntiToxicGenerator(map, plantEnergy);
-//        Plant plant = new Plant(new Vector2d(1, 1), plantEnergy);
-//        generator.plantRemoved(plant);
-//
-//        // when
-//        generator.plantPlaced(plant);
-//
-//        // then
-//        assertFalse(generator.getEmptySquares().contains(plant.getPosition()));
-//        assertEquals(0, generator.getNumOfZeroDeathsEmptySquares());
-//    }
+    @Test
+    public void testNoPlaceForPlant() {
+        SimulationSetup setup = new SimulationSetup(false, 100, 100,
+                false, 0, 0, 10, false,
+                0, 0, 0, 0,
+                0, false, 0, 0);
+        GlobeMap map = new GlobeMap(setup);
 
-//    @Test
-//    public void testAnimalDiedAt() {
-//        // given
-//        SimulationSetup setup = new SimulationSetup(false, 100, 100, false, 0, 0, 0, false, 0, 0, 0, 0, 0, false, 0, 0);
-//        GlobeMap map = new GlobeMap(setup);;
-//        int plantEnergy = 10;
-//        AntiToxicGenerator generator = new AntiToxicGenerator(map, plantEnergy);
-//        Vector2d position = new Vector2d(1, 1);
-//        generator.plantRemoved(new Plant(position, plantEnergy));
-//
-//        // when
-//        generator.animalDiedAt(position);
-//
-//        // then
-//        //assertEquals(1, generator.getNumOfDeaths().get(position).intValue());
-//        assertEquals(0, generator.getNumOfZeroDeathsEmptySquares());
-//    }
+        AntiToxicGenerator generator = new AntiToxicGenerator(map, 10);
+        int before = generator.getNumOfZeroDeathsEmptySquares();
+        Plant plant = generator.generatePlant();
+        int after = generator.getNumOfZeroDeathsEmptySquares();
+        assertEquals(before, after);
+    }
 
+
+    @Test
+    public void testPlantPlaced() {
+        // given
+        SimulationSetup setup = new SimulationSetup(false, 100, 100, false, 0, 0, 0, false, 0, 0, 0, 0, 0, false, 0, 0);
+        GlobeMap map = new GlobeMap(setup);
+        int plantEnergy = 10;
+        AntiToxicGenerator generator = new AntiToxicGenerator(map, plantEnergy);
+        Plant plant = new Plant(new Vector2d(1, 1), plantEnergy);
+        generator.plantRemoved(plant);
+        generator.plantPlaced(plant);
+        assertFalse(generator.getEmptySquares().contains(plant.getPosition()));
+
+    }
+
+    @Test
+    public void testPlantRemoved() {
+        SimulationSetup setup = new SimulationSetup(false, 100, 100, false, 0, 0, 0, false, 0, 0, 0, 0, 0, false, 0, 0);
+        GlobeMap map = new GlobeMap(setup);
+        AntiToxicGenerator generator = new AntiToxicGenerator(map, 10);
+        Vector2d position = new Vector2d(1, 1);
+        Plant plant = new Plant(position, 10);
+        generator.plantRemoved(plant);
+        assertTrue(generator.getEmptySquares().contains(position));
+    }
+    @Test
+    public void testAnimalDiedAt() {
+        SimulationSetup setup = new SimulationSetup(false, 100, 100, false,
+                0, 0, 10, false, 0, 0,
+                0, 0, 0, false, 0, 0);
+        GlobeMap map = new GlobeMap(setup);
+        AntiToxicGenerator generator = new AntiToxicGenerator(map, 10);
+        Vector2d position = new Vector2d(1, 1);
+        assertEquals(100*100, generator.getNumOfZeroDeathsEmptySquares());
+        generator.animalDiedAt(position);
+        assertEquals(1, (int) generator.getNumOfDeaths(position));
+        assertEquals(100*100-1, generator.getNumOfZeroDeathsEmptySquares());
+    }
 }
+
