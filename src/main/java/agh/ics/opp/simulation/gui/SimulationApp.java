@@ -1,6 +1,7 @@
 package agh.ics.opp.simulation.gui;
 
 import agh.ics.opp.simulation.SimulationEngine;
+import agh.ics.opp.simulation.StatisticsRunner;
 import agh.ics.opp.simulation.map.GlobeMap;
 import agh.ics.opp.simulation.map.HellPortalMap;
 import agh.ics.opp.simulation.map.IWorldMap;
@@ -48,7 +49,8 @@ public class SimulationApp extends Application {
                     new GlobeMap(setup)         // false
             );
             MapRenderer renderer = new MapRenderer(gridPane, map);
-            final SimulationEngine engine = new SimulationEngine(setup, map, renderer);
+            StatisticsRunner stats = new StatisticsRunner(map);     // temp
+            final SimulationEngine engine = new SimulationEngine(setup, map, renderer, stats);
             engine.setMoveDelay(500);
             Thread engineThread = new Thread(engine);
             engineThread.start();
