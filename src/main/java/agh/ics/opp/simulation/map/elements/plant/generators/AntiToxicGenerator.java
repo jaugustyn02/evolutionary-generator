@@ -67,4 +67,11 @@ public class AntiToxicGenerator extends AbstractPlantGenerator implements IAnima
     public Integer getNumOfDeaths(Vector2d position){
         return numOfDeaths.get(position);
     }
+    public int getNumOfZeroDeathsEmptySquares(){
+        return numOfZeroDeathsEmptySquares;
+    }
+
+    public TreeSet<Vector2d> getEmptySquares() {
+        return emptySquares;
+    }
 }

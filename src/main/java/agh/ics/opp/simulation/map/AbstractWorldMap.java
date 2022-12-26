@@ -113,6 +113,7 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalPositionCorr
             animalsSet.addAll(set);
         return animalsSet;
     }
+
     @Override
     public List<Vector2d> getAnimalsPositions(){
         return new ArrayList<>(animalsMap.keySet());
