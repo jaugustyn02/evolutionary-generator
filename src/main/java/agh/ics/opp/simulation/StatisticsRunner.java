@@ -1,3 +1,4 @@
+
 package agh.ics.opp.simulation;
 
 import agh.ics.opp.simulation.map.IWorldMap;
@@ -60,3 +61,4 @@ public class StatisticsRunner {
     }
 
 }
+

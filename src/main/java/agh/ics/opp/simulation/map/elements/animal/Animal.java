@@ -73,7 +73,9 @@ public class Animal extends AbstractMapElement {
         this.energy = Math.max(this.energy-energy, 0);
     }
     public void increaseEnergy(Integer energy){
-        this.energy += energy;
+        if (this.energy + energy <= this.fullEnergy) {
+            this.energy += energy;
+        }
     }
     public boolean isBreedable(){
         return this.energy >= this.fullEnergy;
@@ -116,6 +118,10 @@ public class Animal extends AbstractMapElement {
     }
     public int getNextGeneIndex(){
         return nextGeneIndex;
+    }
+    //do testów
+    public void setDirection(MapDirection direction) {
+        this.direction = direction;
     }
 
     public String toString(){

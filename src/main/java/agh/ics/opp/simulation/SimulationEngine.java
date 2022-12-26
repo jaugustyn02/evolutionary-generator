@@ -1,3 +1,4 @@
+
 package agh.ics.opp.simulation;
 
 
@@ -77,3 +78,4 @@ public class SimulationEngine implements IEngine, Runnable{
         this.moveDelay = moveDelay;
     }
 }
+

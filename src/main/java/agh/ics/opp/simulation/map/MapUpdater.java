@@ -32,7 +32,7 @@ public class MapUpdater implements IMapUpdater {
         this.initializeMap();
     }
 
-    private void initializeMap() {
+    public void initializeMap() {
         generateAnimals(setup.initialNumOfAnimals());
         generatePlants(setup.initialNumOfPlants());
     }

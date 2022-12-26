@@ -22,7 +22,11 @@ public class UnboundedMutator implements IGenomeMutator {
         while (changesCounter < randomNumOfMutations){
             indexToMutate = ThreadLocalRandom.current().nextInt(0, genome.length);
             if (!changedGenes[indexToMutate]){
-                genome[indexToMutate] = ThreadLocalRandom.current().nextInt(0, 8);
+                int newGene;
+                do{
+                    newGene  = ThreadLocalRandom.current().nextInt(0, 8);
+                }while (newGene == genome[indexToMutate]);
+                genome[indexToMutate] = newGene;
                 changesCounter++;
                 changedGenes[indexToMutate] = true;
             }

@@ -75,6 +75,15 @@ public class EquatorialGenerator extends AbstractPlantGenerator {
         }
     }
 
+    public Set<Vector2d> getEmptySquaresEquator() {
+        return emptySquaresEquator;
+    }
+
+    public Set<Vector2d> getEmptySquaresAround() {
+        return emptySquaresAround;
+    }
+
+
 //    public EquatorialGenerator(IWorldMap map) {
 //        this.map = map;
 //        // lowerLeft.y - 40% height
