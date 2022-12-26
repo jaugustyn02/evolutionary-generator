@@ -1,3 +1,4 @@
+
 package agh.ics.opp.simulation;
 
 
@@ -10,16 +11,18 @@ public class SimulationEngine implements IEngine, Runnable{
     private final IWorldMap map;
     private final MapRenderer renderer;
     private final MapUpdater updater;
+    private final StatisticsRunner stats;
     private int moveDelay = 1000;
     private int dayNum = 0;
 
     private volatile boolean running = true;
     private volatile boolean paused = false;
 
-    public SimulationEngine(SimulationSetup setup, IWorldMap map, MapRenderer renderer) {
+    public SimulationEngine(SimulationSetup setup, IWorldMap map, MapRenderer renderer, StatisticsRunner stats) {
         this.updater = new MapUpdater(map, setup);
         this.map = map;
         this.renderer = renderer;
+        this.stats = stats;
         this.renderer.render();
         System.out.println(map);
     }
@@ -41,11 +44,13 @@ public class SimulationEngine implements IEngine, Runnable{
                         System.out.println("Exception: The simulation has been aborted (2)");
                     }
                 }
-                updater.nextDay();
                 dayNum++;
-                System.out.println("Day " + (dayNum) + ":");
+                updater.nextDay();
                 this.renderer.render();
+                stats.updateStatistics();
+                System.out.println("Day " + (dayNum) + ":");
                 System.out.println(map);
+                System.out.println(stats.getStatistics());
             }
         }
     }
@@ -73,3 +78,4 @@ public class SimulationEngine implements IEngine, Runnable{
         this.moveDelay = moveDelay;
     }
 }
+
