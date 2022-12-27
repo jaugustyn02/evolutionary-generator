@@ -1,0 +1,16 @@
+mapVariant=  // False - GlobeMap, True - HellPortalMap
+mapHeight=
+mapWidth=
+plantPreferencesVariant=  // False - wariant z równikiem, True - wariant z toksycznymi trupami
+initialNumOfPlants=
+numOfPlantsPerDay=
+plantEnergy=
+animalBehaviorsVariant=  // False - ruch zgodnie z genomem, True - trochę szaleństwa
+initialNumOfAnimals=
+initialAnimalEnergy=
+fullAnimalEnergy=  // minimalna wartość energii by zwierzę było najedzone
+animalEnergyConsumption=
+genomeLength=
+mutationsVariant= // False - wariant w pełni losowych mutacji, True - mutacja ograniczona +-1
+minNumOfMutations=
+maxNumOfMutations=

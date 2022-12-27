@@ -1,0 +1,16 @@
+mapVariant=
+mapHeight=
+mapWidth=
+plantPreferencesVariant
+initialNumOfPlants=
+numOfPlantsPerDay=
+plantEnergy=
+animalBehaviorsVariant=
+initialNumOfAnimals=
+initialAnimalEnergy=
+fullAnimalEnergy=
+animalEnergyConsumption=
+genomeLength=
+mutationsVariant=
+minNumOfMutations=
+maxNumOfMutations=
