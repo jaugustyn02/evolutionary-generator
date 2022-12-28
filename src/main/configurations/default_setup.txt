@@ -1,4 +1,3 @@
-
 mapVariant=false
 mapHeight=8
 mapWidth=10

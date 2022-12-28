@@ -1,4 +1,3 @@
-
 package agh.ics.opp.simulation.gui;
 
 import agh.ics.opp.simulation.SimulationEngine;
@@ -25,6 +24,8 @@ public class SimulationScene {
     public void setScene(Stage primaryStage, SimulationSetup setup){
         //map
         GridPane gridPane = new GridPane();
+        gridPane.setPrefWidth(500);
+        gridPane.setPrefHeight(500);
         gridPane.setGridLinesVisible(true);
         gridPane.setPadding(new Insets(20, 20, 20, 20));
 
@@ -44,10 +45,11 @@ public class SimulationScene {
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Days");
-        yAxis.setLabel("Number of animals");
         xAxis.setTickUnit(1);
         yAxis.setTickUnit(1);
-
+        xAxis.setMinorTickVisible(false);
+        yAxis.setMinorTickVisible(false);
+        xAxis.setTickMarkVisible(false);
         LineChart<Number, Number> animalCount = new LineChart<>(xAxis, yAxis);
         animalCount.setId("chart");
         animalCount.setCreateSymbols(false);
@@ -76,6 +78,7 @@ public class SimulationScene {
                     new GlobeMap(setup)         // false
             );
             MapRenderer renderer = new MapRenderer(gridPane, map);
+
             StatisticsRunner stats = new StatisticsRunner(map);     // temp
             final SimulationEngine engine = new SimulationEngine(setup, map, renderer, stats , statsPlace);
             engine.setMoveDelay(500);
@@ -107,5 +110,6 @@ public class SimulationScene {
         }
     }
 }
+
 
 
