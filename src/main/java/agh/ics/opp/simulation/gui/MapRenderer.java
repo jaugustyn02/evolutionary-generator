@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 
 import java.io.FileNotFoundException;
@@ -47,6 +48,8 @@ public class MapRenderer{
             GridPane.setValignment(label, VPos.CENTER);
             renderHeader();
 
+
+
             for (int row = upperRight.y; row >= lowerLeft.y; row--) {
                 label = new Label(String.valueOf(upperRight.y-row+lowerLeft.y));
                 rootPane.add(label, 0,row-lowerLeft.y+1);
@@ -54,6 +57,7 @@ public class MapRenderer{
                 GridPane.setValignment(label, VPos.CENTER);
                 renderRow(row);
             }
+
         });
     }
 

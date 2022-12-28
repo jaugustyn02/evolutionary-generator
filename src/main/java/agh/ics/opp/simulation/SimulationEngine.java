@@ -13,9 +13,7 @@ import javafx.scene.layout.HBox;
 
 
 public class SimulationEngine implements IEngine, Runnable{
-
-//    private final IWorldMap map;
-
+    //    private final IWorldMap map;
     private final MapRenderer renderer;
     private final MapUpdater updater;
     private final StatisticsRunner stats;
@@ -24,7 +22,8 @@ public class SimulationEngine implements IEngine, Runnable{
     private int dayNum = 0;
     public Node element;
     public Node chart;
-    private final XYChart.Series<Number, Number> data = new XYChart.Series<>();
+    private final XYChart.Series<Number, Number> animalData = new XYChart.Series<>();
+    private final XYChart.Series<Number, Number> plantData = new XYChart.Series<>();
     private volatile boolean running = true;
     private volatile boolean paused = false;
 
@@ -35,9 +34,8 @@ public class SimulationEngine implements IEngine, Runnable{
         this.stats = stats;
         this.statsPlace = statsPlace;
         this.renderer.render();
-
-        this.data.setName("Number Of Animals");
-
+        this.animalData.setName("Number Of Animals");
+        this.plantData.setName("Number Of Plants");
 //        System.out.println(map);
     }
 
@@ -73,8 +71,10 @@ public class SimulationEngine implements IEngine, Runnable{
                     chart = statsPlace.lookup("#chart");
                     LineChart<Number, Number> chart1 = (LineChart<Number, Number>)chart;
 
-                    data.getData().add(new XYChart.Data<>(dayNum, stats.getNumOfAnimals()));
-                    chart1.getData().add(data);
+                    animalData.getData().add(new XYChart.Data<>(dayNum, stats.getNumOfAnimals()));
+                    chart1.getData().add(animalData);
+                    plantData.getData().add(new XYChart.Data<>(dayNum, stats.getNumOfPlants()));
+                    chart1.getData().add(plantData);
                 });
 
 

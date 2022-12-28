@@ -1,4 +1,3 @@
-
 mapVariant=
 mapHeight=
 mapWidth=
