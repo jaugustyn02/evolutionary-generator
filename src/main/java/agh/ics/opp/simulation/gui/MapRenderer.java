@@ -20,7 +20,7 @@ public class MapRenderer{
     private final Vector2d lowerLeft;
     private final Vector2d upperRight;
     private final IWorldMap map;
-    private final int FIELD_GROW = 40;
+    private final int FIELD_GROW = 50;
 
     public MapRenderer(GridPane rootPane, IWorldMap map) throws FileNotFoundException {
         this.rootPane = rootPane;
