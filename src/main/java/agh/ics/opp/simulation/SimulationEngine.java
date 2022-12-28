@@ -1,3 +1,4 @@
+
 package agh.ics.opp.simulation;
 
 
@@ -7,7 +8,7 @@ import agh.ics.opp.simulation.map.MapUpdater;
 import agh.ics.opp.simulation.types.SimulationSetup;
 
 public class SimulationEngine implements IEngine, Runnable{
-    private final IWorldMap map;
+//    private final IWorldMap map;
     private final MapRenderer renderer;
     private final MapUpdater updater;
     private final StatisticsRunner stats;
@@ -19,11 +20,11 @@ public class SimulationEngine implements IEngine, Runnable{
 
     public SimulationEngine(SimulationSetup setup, IWorldMap map, MapRenderer renderer, StatisticsRunner stats) {
         this.updater = new MapUpdater(map, setup);
-        this.map = map;
+//        this.map = map;
         this.renderer = renderer;
         this.stats = stats;
         this.renderer.render();
-        System.out.println(map);
+//        System.out.println(map);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class SimulationEngine implements IEngine, Runnable{
                 this.renderer.render();
                 stats.updateStatistics();
                 System.out.println("Day " + (dayNum) + ":");
-                System.out.println(map);
+//                System.out.println(map);
                 System.out.println(stats.getStatistics());
             }
         }
@@ -77,3 +78,4 @@ public class SimulationEngine implements IEngine, Runnable{
         this.moveDelay = moveDelay;
     }
 }
+

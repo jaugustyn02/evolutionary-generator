@@ -1,7 +1,7 @@
 mapVariant=
 mapHeight=
 mapWidth=
-plantPreferencesVariant
+plantPreferencesVariant=
 initialNumOfPlants=
 numOfPlantsPerDay=
 plantEnergy=

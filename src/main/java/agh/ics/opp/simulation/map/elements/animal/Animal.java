@@ -117,6 +117,10 @@ public class Animal extends AbstractMapElement {
     public int getNextGeneIndex(){
         return nextGeneIndex;
     }
+    //do testów
+    public void setDirection(MapDirection direction) {
+        this.direction = direction;
+    }
 
     public String toString(){
         return energy.toString();

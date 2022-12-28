@@ -1,3 +1,4 @@
+
 package agh.ics.opp.simulation.types;
 
 import java.util.Arrays;
@@ -20,3 +21,4 @@ public record SimulationStatistics (
                "avgAnimalLifeSpan: " + avgAnimalLifeSpan + "\n";
     }
 }
+

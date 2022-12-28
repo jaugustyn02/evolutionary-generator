@@ -1,3 +1,4 @@
+
 package agh.ics.opp.simulation;
 
 import agh.ics.opp.simulation.map.IWorldMap;
@@ -54,9 +55,9 @@ public class StatisticsRunner {
         avgAnimalEnergy = animals.stream().mapToInt(Animal::getEnergy)
                 .summaryStatistics().getAverage();
         numOfDeadAnimals += animals.stream().filter(animal -> animal.getEnergy() == 0).count();
-        System.out.println(animals.stream().filter(animal -> animal.getEnergy() == 0).count());
         sumOfDeadAnimalsLifeSpan += animals.stream().filter(animal -> animal.getEnergy() == 0).mapToInt(Animal::getAge).sum();
         avgAnimalLifeSpan = (double) sumOfDeadAnimalsLifeSpan / numOfDeadAnimals;
     }
 
 }
+

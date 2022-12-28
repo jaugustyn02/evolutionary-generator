@@ -1,3 +1,4 @@
+
 package agh.ics.opp.simulation.gui;
 
 import agh.ics.opp.simulation.SimulationEngine;
@@ -80,3 +81,4 @@ public class SimulationApp extends Application {
         }
     }
 }
+
