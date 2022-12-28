@@ -1,3 +1,4 @@
+
 package agh.ics.opp.simulation.gui;
 
 import agh.ics.opp.simulation.SimulationEngine;
@@ -6,9 +7,13 @@ import agh.ics.opp.simulation.map.GlobeMap;
 import agh.ics.opp.simulation.map.HellPortalMap;
 import agh.ics.opp.simulation.map.IWorldMap;
 import agh.ics.opp.simulation.types.SimulationSetup;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -18,9 +23,12 @@ import java.io.FileNotFoundException;
 
 public class SimulationScene {
     public void setScene(Stage primaryStage, SimulationSetup setup){
+        //map
         GridPane gridPane = new GridPane();
         gridPane.setGridLinesVisible(true);
+        gridPane.setPadding(new Insets(20, 20, 20, 20));
 
+        // pause button
         Button pauseButton = new Button();
         pauseButton.setText("Pause");
         pauseButton.setStyle("-fx-background-color: #ff0000; ");
@@ -28,13 +36,36 @@ public class SimulationScene {
         HBox hBox = new HBox(10);
         hBox.getChildren().add(pauseButton);
         hBox.setAlignment(Pos.CENTER);
+        VBox mapBox = new VBox(3);
+        mapBox.getChildren().add(gridPane);
+        mapBox.getChildren().add(hBox);
 
-        VBox vBox = new VBox(3);
-        vBox.getChildren().add(gridPane);
-        vBox.getChildren().add(hBox);
+        //chart
+        NumberAxis xAxis = new NumberAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Days");
+        yAxis.setLabel("Number of animals");
+        xAxis.setTickUnit(1);
+        yAxis.setTickUnit(1);
 
-        // Important
-        Scene scene = new Scene(vBox, 500, 500);
+        LineChart<Number, Number> animalCount = new LineChart<>(xAxis, yAxis);
+        animalCount.setId("chart");
+        animalCount.setCreateSymbols(false);
+
+        //stats
+        Label statsLabel = new Label();
+        statsLabel.setId("statsLabel");
+        statsLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 18pt; -fx-padding: 40 40 40 40; -fx-line-spacing: 10");
+        HBox statsPlace = new HBox(animalCount, statsLabel);
+        HBox top = new HBox(mapBox, statsPlace);
+
+
+        //animal stats
+        VBox bottom = new VBox();
+
+        VBox root = new VBox(top, bottom);
+        Scene scene = new Scene(root, 1900, 1000);
+
         primaryStage.setScene(scene); // Najważniejsza część - podpięcie sceny do primaryStage
         // Brak primaryStage.show() - metoda show() jest wywoływana w MenuApp po wykonaniu się tej metody
         // end
@@ -46,7 +77,7 @@ public class SimulationScene {
             );
             MapRenderer renderer = new MapRenderer(gridPane, map);
             StatisticsRunner stats = new StatisticsRunner(map);     // temp
-            final SimulationEngine engine = new SimulationEngine(setup, map, renderer, stats);
+            final SimulationEngine engine = new SimulationEngine(setup, map, renderer, stats , statsPlace);
             engine.setMoveDelay(500);
             Thread engineThread = new Thread(engine);
             engineThread.start();
@@ -76,3 +107,5 @@ public class SimulationScene {
         }
     }
 }
+
+

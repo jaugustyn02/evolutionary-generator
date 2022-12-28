@@ -13,12 +13,12 @@ public record SimulationStatistics (
 ){
     @Override
     public String toString(){
-        return "numOfAnimals: " + numOfAnimals + "\n" +
-               "numOfPlants: " + numOfPlants + "\n" +
-               "numOfEmptySquares: " + numOfEmptySquares + "\n" +
-               "mostPopularGenome: " + Arrays.toString(mostPopularGenome) + "\n" +
-               "avgAnimalEnergy: " + avgAnimalEnergy + "\n" +
-               "avgAnimalLifeSpan: " + avgAnimalLifeSpan + "\n";
+        return "Number of animals: " + numOfAnimals + "\n" +
+                "Number of plants: " + numOfPlants + "\n" +
+                "Number of empty squares: " + numOfEmptySquares + "\n" +
+                "Most popular genome: " + Arrays.toString(mostPopularGenome) + "\n" +
+                "Average animal energy: " + Math.round(avgAnimalEnergy*100.0)/100.0 + "\n" +
+                "Average animal life span: " + Math.round(avgAnimalLifeSpan*100.0)/100.0 + "\n";
     }
 }
 

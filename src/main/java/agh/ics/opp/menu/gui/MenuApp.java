@@ -1,3 +1,4 @@
+
 package agh.ics.opp.menu.gui;
 
 import agh.ics.opp.SetupParser;
@@ -96,3 +97,4 @@ public class MenuApp extends Application {
         primaryStage.setOnCloseRequest(event -> System.exit(0));
     }
 }
+

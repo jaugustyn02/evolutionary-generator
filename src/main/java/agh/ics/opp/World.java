@@ -1,3 +1,4 @@
+
 package agh.ics.opp;
 
 import agh.ics.opp.menu.gui.MenuApp;

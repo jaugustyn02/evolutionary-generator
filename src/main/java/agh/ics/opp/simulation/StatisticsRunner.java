@@ -58,6 +58,11 @@ public class StatisticsRunner {
         sumOfDeadAnimalsLifeSpan += animals.stream().filter(animal -> animal.getEnergy() == 0).mapToInt(Animal::getAge).sum();
         avgAnimalLifeSpan = (double) sumOfDeadAnimalsLifeSpan / numOfDeadAnimals;
     }
-
+    public int getNumOfAnimals(){
+        return numOfAnimals;
+    }
+    public int getNumOfPlants(){
+        return numOfPlants;
+    }
 }
 

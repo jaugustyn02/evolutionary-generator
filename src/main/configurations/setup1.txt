@@ -1,3 +1,4 @@
+
 mapVariant=true
 mapHeight=10
 mapWidth=10
