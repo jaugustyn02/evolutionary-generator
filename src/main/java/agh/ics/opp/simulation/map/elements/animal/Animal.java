@@ -73,9 +73,7 @@ public class Animal extends AbstractMapElement {
         this.energy = Math.max(this.energy-energy, 0);
     }
     public void increaseEnergy(Integer energy){
-        if (this.energy + energy <= this.fullEnergy) {
-            this.energy += energy;
-        }
+        this.energy += energy;
     }
     public boolean isBreedable(){
         return this.energy >= this.fullEnergy;
