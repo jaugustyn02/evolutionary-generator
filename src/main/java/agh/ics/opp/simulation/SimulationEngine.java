@@ -13,7 +13,9 @@ import javafx.scene.layout.HBox;
 
 
 public class SimulationEngine implements IEngine, Runnable{
-    //    private final IWorldMap map;
+
+//    private final IWorldMap map;
+
     private final MapRenderer renderer;
     private final MapUpdater updater;
     private final StatisticsRunner stats;
@@ -33,7 +35,9 @@ public class SimulationEngine implements IEngine, Runnable{
         this.stats = stats;
         this.statsPlace = statsPlace;
         this.renderer.render();
+
         this.data.setName("Number Of Animals");
+
 //        System.out.println(map);
     }
 
