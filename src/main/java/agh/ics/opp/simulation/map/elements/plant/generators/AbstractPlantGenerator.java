@@ -14,7 +14,7 @@ abstract public class AbstractPlantGenerator implements IPlantGenerator, IPlantP
     @Override
     abstract public void plantPlaced(Plant plant);
 
-    protected Vector2d getPositionFromSet(Set<Vector2d> set, int index){
+    public Vector2d getPositionFromSet(Set<Vector2d> set, int index){
         Iterator<Vector2d> it = set.iterator();
         while(index > 0 && it.hasNext()){
             it.next();

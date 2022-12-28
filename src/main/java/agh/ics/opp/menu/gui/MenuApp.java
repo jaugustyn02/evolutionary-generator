@@ -1,5 +1,8 @@
 package agh.ics.opp.menu.gui;
 
+import agh.ics.opp.SetupParser;
+import agh.ics.opp.simulation.gui.SimulationScene;
+import agh.ics.opp.simulation.types.SimulationSetup;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,11 +14,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 
-import java.io.File;
+import java.io.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 
 public class MenuApp extends Application {
+    private int SimulationNumber = 1;
     @Override
     public void start(Stage primaryStage){
 
@@ -52,6 +56,7 @@ public class MenuApp extends Application {
         vBox.getChildren().add(hBox2);
 
         Scene scene = new Scene(vBox, 450, 150);
+        primaryStage.setTitle("Menu");
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -68,11 +73,26 @@ public class MenuApp extends Application {
         }));
 
         startButton.setOnAction(event -> {
-            System.out.println(selectedFile);
-            if(selectedFile.get() != null)
-                System.out.println("Odpalany: "+selectedFile.get().getAbsolutePath());
-//                Application.launch(SimulationApp.class, selectedFile.get().getAbsolutePath());
+            if(selectedFile.get() != null){
+                try (FileReader file = new FileReader(selectedFile.get().getAbsoluteFile())){
+                    BufferedReader bf = new BufferedReader(file);
+                    SimulationSetup setup = (new SetupParser()).parseSetup(bf.lines().toArray(String[]::new));
+                    if(setup != null) {
+                        Stage newStage = new Stage();
+                        String newTitle = selectedFile.get().getName();
+                        newStage.setTitle("Symulacja "+SimulationNumber+" - " + newTitle.substring(0, newTitle.length() - 4));
+                        (new SimulationScene()).setScene(newStage, setup);
+                        newStage.show();
+                        SimulationNumber++;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             else System.out.println("No configuration file selected");
         });
+
+        // end program when menu window closed
+        primaryStage.setOnCloseRequest(event -> System.exit(0));
     }
 }
