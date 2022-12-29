@@ -11,6 +11,7 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -19,9 +20,11 @@ import java.io.FileNotFoundException;
 public class SimulationApp extends Application {
     @Override
     public void start(Stage primaryStage){
+
         GridPane gridPane = new GridPane();
         gridPane.setGridLinesVisible(true);
-
+        gridPane.setPrefWidth(500);
+        gridPane.setPrefHeight(500);
         Button pauseButton = new Button();
         pauseButton.setText("Pause");
         pauseButton.setStyle("-fx-background-color: #ff0000; ");
@@ -30,11 +33,18 @@ public class SimulationApp extends Application {
         hBox.getChildren().add(pauseButton);
         hBox.setAlignment(Pos.CENTER);
 
-        VBox vBox = new VBox(3);
-        vBox.getChildren().add(gridPane);
-        vBox.getChildren().add(hBox);
+        VBox mapBox = new VBox(3);
+        mapBox.getChildren().add(gridPane);
+        mapBox.getChildren().add(hBox);
+        Label statsLabel = new Label("sth");
+        HBox statsPlace = new HBox(statsLabel);
 
-        Scene scene = new Scene(vBox, 500, 500);
+        HBox top = new HBox(mapBox, statsPlace);
+
+        VBox bottom = new VBox();
+
+        VBox root = new VBox(top, bottom);
+        Scene scene = new Scene(root, 1900, 1000);
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -51,7 +61,8 @@ public class SimulationApp extends Application {
             );
             MapRenderer renderer = new MapRenderer(gridPane, map);
             StatisticsRunner stats = new StatisticsRunner(map);     // temp
-            final SimulationEngine engine = new SimulationEngine(setup, map, renderer, stats);
+
+            final SimulationEngine engine = new SimulationEngine(setup, map, renderer, stats, statsPlace);
             engine.setMoveDelay(500);
             Thread engineThread = new Thread(engine);
             engineThread.start();

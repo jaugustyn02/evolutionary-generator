@@ -1,5 +1,6 @@
 package agh.ics.opp.simulation.gui;
 
+import agh.ics.opp.simulation.map.IWorldMap;
 import agh.ics.opp.simulation.map.elements.animal.Animal;
 import agh.ics.opp.simulation.map.elements.IMapElement;
 import javafx.geometry.Insets;
@@ -9,15 +10,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
-import javafx.scene.text.Font;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 
 public class GuiElementBox {
     private final VBox box = new VBox();
 
-    public GuiElementBox(IMapElement element) {
+    public GuiElementBox(IMapElement element, int fieldGrow) {
+        box.setStyle("-fx-background-color: #99FF8A; -fx-border-color: #6DD945; -fx-border-width: 2px; -fx-border-top-width: 0px; -fx-border-left-width: 0px");
         if (element == null) {
             Label label = new Label(" ");
             box.getChildren().add(label);
@@ -25,26 +25,32 @@ public class GuiElementBox {
             try (FileInputStream fileInStr = new FileInputStream(element.getImagePath())){
                 Image image = new Image(fileInStr);
                 ImageView imageView = new ImageView(image);
-                imageView.setFitWidth(23);
-                imageView.setFitHeight(23);
+                imageView.setFitWidth(fieldGrow-5);
+                imageView.setFitHeight(fieldGrow-5);
                 if(element instanceof Animal) {
-                    imageView.setFitHeight(23);
-                    imageView.setFitWidth(21);
-                    box.setPadding(new Insets(3,0,0,0));
+                    imageView.setFitHeight(fieldGrow-5);
+                    imageView.setFitWidth(Math.round((fieldGrow-5)*0.9));
+                    //box.setPadding(new Insets(2,0,0,0));
                 }
                 box.getChildren().add(imageView);
             } catch (IOException e) {
                 System.out.println("Exception: " + e.getMessage());
             }
-            if (element.getLabelName() != null ){
-                Label label = new Label(element.getLabelName());
-                box.getChildren().add(label);
-                label.setFont(new Font(10));
-            }
+//            if (element.getLabelName() != null ){
+//                Label label = new Label(element.getLabelName());
+//                box.getChildren().add(label);
+//                label.setFont(new Font(10));
+//            }
             box.setAlignment(Pos.CENTER);
         }
     }
-    public void renderElement(GridPane rootElement, int x, int y){
+    public void renderElement(GridPane rootElement, IWorldMap map, int x, int y){
+        if(y >= map.getEquatorBottom()+2&& y<= map.getEquatorTop()+2){
+            box.setStyle("-fx-background-color:#239911; -fx-border-color: #6DD945; -fx-border-width: 2px; -fx-border-top-width: 0px; -fx-border-left-width: 0px");
+        }
+        else box.setStyle("-fx-background-color: #99FF8A; -fx-border-color: #6DD945; -fx-border-width: 2px; -fx-border-top-width: 0px; -fx-border-left-width: 0px");
         rootElement.add(box, x, y);
     }
 }
+
+

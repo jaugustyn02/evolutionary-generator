@@ -32,5 +32,7 @@ public interface IWorldMap {
     boolean isPlantAt(Vector2d position);
     int getWidth();
     int getHeight();
+    int getEquatorBottom();
+    int getEquatorTop();
 }
 

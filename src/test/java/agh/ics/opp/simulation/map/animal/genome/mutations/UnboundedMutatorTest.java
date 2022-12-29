@@ -3,8 +3,6 @@ package agh.ics.opp.simulation.map.animal.genome.mutations;
 import agh.ics.opp.simulation.map.elements.animal.genome.mutations.UnboundedMutator;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

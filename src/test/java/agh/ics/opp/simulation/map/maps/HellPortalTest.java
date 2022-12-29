@@ -5,10 +5,8 @@ import agh.ics.opp.simulation.map.elements.animal.Animal;
 import agh.ics.opp.simulation.map.elements.animal.behaviours.OrderlySelector;
 import agh.ics.opp.simulation.types.SimulationSetup;
 import agh.ics.opp.simulation.types.Vector2d;
-
 import org.junit.jupiter.api.Test;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class HellPortalTest {
