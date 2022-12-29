@@ -1,5 +1,6 @@
 package agh.ics.opp.simulation.gui;
 
+import agh.ics.opp.simulation.map.IWorldMap;
 import agh.ics.opp.simulation.map.elements.animal.Animal;
 import agh.ics.opp.simulation.map.elements.IMapElement;
 import javafx.geometry.Insets;
@@ -43,7 +44,11 @@ public class GuiElementBox {
             box.setAlignment(Pos.CENTER);
         }
     }
-    public void renderElement(GridPane rootElement, int x, int y){
+    public void renderElement(GridPane rootElement, IWorldMap map, int x, int y){
+        if(y >= map.getEquatorBottom()+2&& y<= map.getEquatorTop()+2){
+            box.setStyle("-fx-background-color:#239911; -fx-border-color: #6DD945; -fx-border-width: 2px; -fx-border-top-width: 0px; -fx-border-left-width: 0px");
+        }
+        else box.setStyle("-fx-background-color: #99FF8A; -fx-border-color: #6DD945; -fx-border-width: 2px; -fx-border-top-width: 0px; -fx-border-left-width: 0px");
         rootElement.add(box, x, y);
     }
 }

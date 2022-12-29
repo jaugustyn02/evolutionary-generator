@@ -66,7 +66,7 @@ public class MapRenderer{
         rootPane.getRowConstraints().add(new RowConstraints(this.fieldGrow));
         for (int col = lowerLeft.x; col <= upperRight.x; col++){
             GuiElementBox elementBox = new GuiElementBox((IMapElement) this.map.objectAt(new Vector2d(col, row)), fieldGrow);
-            elementBox.renderElement(rootPane, col - lowerLeft.x + 1, upperRight.y - row + 1);
+            elementBox.renderElement(rootPane, map, col - lowerLeft.x + 1, upperRight.y - row + 1);
         }
     }
 }
