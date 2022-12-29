@@ -14,7 +14,7 @@ public class PlantTest {
         assertEquals(position, plant.getPosition());
     }
     @Test
-    public void testEnergyCorrectly() {
+    public void testEnergy() {
         Vector2d position = new Vector2d(1, 2);
         Plant plant = new Plant(position, 10);
         assertEquals(10, plant.getEnergy());

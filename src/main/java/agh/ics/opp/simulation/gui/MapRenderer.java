@@ -21,15 +21,14 @@ public class MapRenderer{
     private final Vector2d lowerLeft;
     private final Vector2d upperRight;
     private final IWorldMap map;
-    private final int FIELD_GROW = 50;
+    public int fieldGrow;
 
     public MapRenderer(GridPane rootPane, IWorldMap map) throws FileNotFoundException {
         this.rootPane = rootPane;
         this.lowerLeft = map.getLowerLeft();
         this.upperRight = map.getUpperRight();
         this.map = map;
-        int width = map.getWidth();
-        int height = map.getHeight();
+        this.fieldGrow = 800/(Math.max(map.getHeight(), map.getWidth()));
     }
 
     public void render(){
@@ -43,7 +42,7 @@ public class MapRenderer{
             rootPane.add(gr,0,0);
             rootPane.setGridLinesVisible(true);
 
-            rootPane.getColumnConstraints().add(new ColumnConstraints(FIELD_GROW));
+            rootPane.getColumnConstraints().add(new ColumnConstraints(fieldGrow));
             Label label = new Label("y/x");
             rootPane.add(label, 0,0);
             GridPane.setHalignment(label, HPos.CENTER);
@@ -64,9 +63,9 @@ public class MapRenderer{
     }
 
     private void renderHeader(){
-        rootPane.getRowConstraints().add(new RowConstraints(FIELD_GROW));
+        rootPane.getRowConstraints().add(new RowConstraints(this.fieldGrow));
         for (int col = lowerLeft.x; col <= upperRight.x; col++) {
-            rootPane.getColumnConstraints().add(new ColumnConstraints(FIELD_GROW));
+            rootPane.getColumnConstraints().add(new ColumnConstraints(fieldGrow));
             Label label = new Label(String.valueOf(col));
             GridPane.setHalignment(label, HPos.CENTER);
             rootPane.add(label, col-lowerLeft.x+1, 0);
@@ -74,9 +73,9 @@ public class MapRenderer{
     }
 
     private void renderRow(int row){
-        rootPane.getRowConstraints().add(new RowConstraints(FIELD_GROW));
+        rootPane.getRowConstraints().add(new RowConstraints(this.fieldGrow));
         for (int col = lowerLeft.x; col <= upperRight.x; col++){
-            GuiElementBox elementBox = new GuiElementBox((IMapElement) this.map.objectAt(new Vector2d(col, row)));
+            GuiElementBox elementBox = new GuiElementBox((IMapElement) this.map.objectAt(new Vector2d(col, row)), fieldGrow);
             elementBox.renderElement(rootPane, col - lowerLeft.x + 1, upperRight.y - row + 1);
         }
     }
