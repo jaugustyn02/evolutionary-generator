@@ -28,7 +28,7 @@ public class SimulationScene {
         gridPane.setMaxWidth(800);
         gridPane.setMaxHeight(800);
         gridPane.setGridLinesVisible(true);
-        gridPane.setPadding(new Insets(40, 20, 20, 40));
+        gridPane.setPadding(new Insets(0, 20, 20, 0));
 
         // pause button
         Button pauseButton = new Button();
@@ -119,5 +119,3 @@ public class SimulationScene {
         }
     }
 }
-
-

@@ -13,7 +13,7 @@ public record SimulationStatistics (
 ){
     @Override
     public String toString(){
-        return "Number of animals: " + numOfAnimals + "\n" +
+        return "\nNumber of animals: " + numOfAnimals + "\n" +
                 "Number of plants: " + numOfPlants + "\n" +
                 "Number of empty squares: " + numOfEmptySquares + "\n" +
                 "Most popular genome: " + Arrays.toString(mostPopularGenome) + "\n" +

@@ -98,4 +98,3 @@ public class MenuApp extends Application {
         primaryStage.setOnCloseRequest(event -> System.exit(0));
     }
 }
-

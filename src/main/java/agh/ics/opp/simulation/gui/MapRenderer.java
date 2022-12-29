@@ -36,26 +36,18 @@ public class MapRenderer{
 
             rootPane.getColumnConstraints().clear();
             rootPane.getRowConstraints().clear();
-            Node gr = rootPane.getChildren().get(0);
+
 
             rootPane.getChildren().clear();
-            rootPane.add(gr,0,0);
+
             rootPane.setGridLinesVisible(true);
 
             rootPane.getColumnConstraints().add(new ColumnConstraints(fieldGrow));
-            Label label = new Label("y/x");
-            rootPane.add(label, 0,0);
-            GridPane.setHalignment(label, HPos.CENTER);
-            GridPane.setValignment(label, VPos.CENTER);
             renderHeader();
 
 
 
             for (int row = upperRight.y; row >= lowerLeft.y; row--) {
-                label = new Label(String.valueOf(upperRight.y-row+lowerLeft.y));
-                rootPane.add(label, 0,row-lowerLeft.y+1);
-                GridPane.setHalignment(label, HPos.CENTER);
-                GridPane.setValignment(label, VPos.CENTER);
                 renderRow(row);
             }
 
@@ -66,9 +58,7 @@ public class MapRenderer{
         rootPane.getRowConstraints().add(new RowConstraints(this.fieldGrow));
         for (int col = lowerLeft.x; col <= upperRight.x; col++) {
             rootPane.getColumnConstraints().add(new ColumnConstraints(fieldGrow));
-            Label label = new Label(String.valueOf(col));
-            GridPane.setHalignment(label, HPos.CENTER);
-            rootPane.add(label, col-lowerLeft.x+1, 0);
+
         }
     }
 

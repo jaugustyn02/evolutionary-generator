@@ -66,7 +66,7 @@ public class SimulationEngine implements IEngine, Runnable{
                 Platform.runLater(() -> {
                     element = statsPlace.lookup("#statsLabel");
                     Label label = (Label)element;
-                    label.setText(stats.getStatistics().toString());
+                    label.setText("Day " + (dayNum) + stats.getStatistics().toString());
 
                     chart = statsPlace.lookup("#chart");
                     LineChart<Number, Number> chart1 = (LineChart<Number, Number>)chart;
