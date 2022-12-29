@@ -28,6 +28,8 @@ public class MapRenderer{
         this.lowerLeft = map.getLowerLeft();
         this.upperRight = map.getUpperRight();
         this.map = map;
+        int width = map.getWidth();
+        int height = map.getHeight();
     }
 
     public void render(){
