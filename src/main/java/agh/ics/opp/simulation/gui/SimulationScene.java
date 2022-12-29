@@ -13,6 +13,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -53,7 +54,7 @@ public class SimulationScene {
         LineChart<Number, Number> animalCount = new LineChart<>(xAxis, yAxis);
         animalCount.setId("chart");
         animalCount.setCreateSymbols(false);
-
+        animalCount.setStyle("-fx-padding: 40 0 0 20");
         //stats
         Label statsLabel = new Label();
         statsLabel.setId("statsLabel");
@@ -64,9 +65,17 @@ public class SimulationScene {
 
         //animal stats
         VBox animalStats = new VBox();
+
+
+        // all on page
         VBox right = new VBox(statsPlace, animalStats);
+        right.setMinWidth(900);
+
         HBox root = new HBox(mapBox, right);
-        Scene scene = new Scene(root, 1900, 1000);
+        ScrollPane scrollPane = new ScrollPane(root);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        Scene scene = new Scene(scrollPane, primaryStage.getWidth(), primaryStage.getHeight());
 
         primaryStage.setScene(scene); // Najważniejsza część - podpięcie sceny do primaryStage
         // Brak primaryStage.show() - metoda show() jest wywoływana w MenuApp po wykonaniu się tej metody

@@ -83,6 +83,7 @@ public class MenuApp extends Application {
                         String newTitle = selectedFile.get().getName();
                         newStage.setTitle("Symulacja "+SimulationNumber+" - " + newTitle.substring(0, newTitle.length() - 4));
                         (new SimulationScene()).setScene(newStage, setup);
+                        newStage.setFullScreen(true);
                         newStage.show();
                         SimulationNumber++;
                     }
