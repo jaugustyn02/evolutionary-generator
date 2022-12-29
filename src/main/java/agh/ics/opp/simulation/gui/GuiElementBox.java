@@ -15,7 +15,7 @@ import java.io.IOException;
 public class GuiElementBox {
     private final VBox box = new VBox();
 
-    public GuiElementBox(IMapElement element) {
+    public GuiElementBox(IMapElement element, int fieldGrow) {
         box.setStyle("-fx-background-color: #99FF8A; -fx-border-color: #6DD945; -fx-border-width: 2px; -fx-border-top-width: 0px; -fx-border-left-width: 0px");
         if (element == null) {
             Label label = new Label(" ");
@@ -24,12 +24,12 @@ public class GuiElementBox {
             try (FileInputStream fileInStr = new FileInputStream(element.getImagePath())){
                 Image image = new Image(fileInStr);
                 ImageView imageView = new ImageView(image);
-                imageView.setFitWidth(30);
-                imageView.setFitHeight(30);
+                imageView.setFitWidth(fieldGrow-5);
+                imageView.setFitHeight(fieldGrow-5);
                 if(element instanceof Animal) {
-                    imageView.setFitHeight(30);
-                    imageView.setFitWidth(25);
-                    box.setPadding(new Insets(5,0,0,0));
+                    imageView.setFitHeight(fieldGrow-5);
+                    imageView.setFitWidth(Math.round((fieldGrow-5)*0.9));
+                    //box.setPadding(new Insets(2,0,0,0));
                 }
                 box.getChildren().add(imageView);
             } catch (IOException e) {

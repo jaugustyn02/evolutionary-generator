@@ -24,10 +24,10 @@ public class SimulationScene {
     public void setScene(Stage primaryStage, SimulationSetup setup){
         //map
         GridPane gridPane = new GridPane();
-        gridPane.setMaxWidth(500);
-        gridPane.setMaxHeight(500);
+        gridPane.setMaxWidth(800);
+        gridPane.setMaxHeight(800);
         gridPane.setGridLinesVisible(true);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setPadding(new Insets(40, 20, 20, 40));
 
         // pause button
         Button pauseButton = new Button();
@@ -57,15 +57,15 @@ public class SimulationScene {
         //stats
         Label statsLabel = new Label();
         statsLabel.setId("statsLabel");
-        statsLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 18pt; -fx-padding: 40 40 40 40; -fx-line-spacing: 10");
+        statsLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 14pt; -fx-padding: 40 40 40 20; -fx-line-spacing: 10");
         HBox statsPlace = new HBox(animalCount, statsLabel);
-        HBox top = new HBox(mapBox, statsPlace);
+        //HBox top = new HBox(mapBox, statsPlace);
 
 
         //animal stats
-        VBox bottom = new VBox();
-
-        VBox root = new VBox(top, bottom);
+        VBox animalStats = new VBox();
+        VBox right = new VBox(statsPlace, animalStats);
+        HBox root = new HBox(mapBox, right);
         Scene scene = new Scene(root, 1900, 1000);
 
         primaryStage.setScene(scene); // Najważniejsza część - podpięcie sceny do primaryStage
