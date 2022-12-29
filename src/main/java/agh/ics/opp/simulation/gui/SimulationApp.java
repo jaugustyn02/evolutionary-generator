@@ -40,7 +40,8 @@ public class SimulationApp extends Application {
         HBox statsPlace = new HBox(statsLabel);
 
         HBox top = new HBox(mapBox, statsPlace);
-
+        Label animalLabel = new Label();
+        VBox animalStats = new VBox(animalLabel);
         VBox bottom = new VBox();
 
         VBox root = new VBox(top, bottom);
@@ -59,7 +60,7 @@ public class SimulationApp extends Application {
                     new HellPortalMap(setup) :  // true
                     new GlobeMap(setup)         // false
             );
-            MapRenderer renderer = new MapRenderer(gridPane, map);
+            MapRenderer renderer = new MapRenderer(gridPane, map, animalStats);
             StatisticsRunner stats = new StatisticsRunner(map);     // temp
 
             final SimulationEngine engine = new SimulationEngine(setup, map, renderer, stats, statsPlace);

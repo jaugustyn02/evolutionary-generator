@@ -6,6 +6,7 @@ import agh.ics.opp.simulation.types.Vector2d;
 import agh.ics.opp.simulation.map.elements.animal.behaviours.IGeneSelector;
 import agh.ics.opp.simulation.map.IAnimalPositionCorrector;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Animal extends AbstractMapElement {
@@ -136,4 +137,13 @@ public class Animal extends AbstractMapElement {
         return "["+energy+"]";
     }
     // gui end
+    public String getAnimalStatistics(){
+        return "Animal genome: " + Arrays.toString(this.genome) + "\n" +
+                "Index of next gene: " + this.nextGeneIndex  + "\n" +
+                "Animal energy: "  + this.energy+ "\n" +
+                "Eaten plants: " + this.numOfEatenPlants +"\n" +
+                "Number of descendants: " + this.numOfDescendants+ "\n" +
+                "Number of days lived: " + this.age+ "\n";
+
+    }
 }

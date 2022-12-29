@@ -3,10 +3,14 @@ package agh.ics.opp.simulation.gui;
 import agh.ics.opp.simulation.map.IWorldMap;
 import agh.ics.opp.simulation.map.elements.animal.Animal;
 import agh.ics.opp.simulation.map.elements.IMapElement;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
@@ -15,8 +19,9 @@ import java.io.IOException;
 
 public class GuiElementBox {
     private final VBox box = new VBox();
+    public Node labelElement;
 
-    public GuiElementBox(IMapElement element, int fieldGrow) {
+    public GuiElementBox(IMapElement element, int fieldGrow, VBox animalStats) {
         box.setStyle("-fx-background-color: #99FF8A; -fx-border-color: #6DD945; -fx-border-width: 2px; -fx-border-top-width: 0px; -fx-border-left-width: 0px");
         if (element == null) {
             Label label = new Label(" ");
@@ -30,17 +35,19 @@ public class GuiElementBox {
                 if(element instanceof Animal) {
                     imageView.setFitHeight(fieldGrow-5);
                     imageView.setFitWidth(Math.round((fieldGrow-5)*0.9));
-                    //box.setPadding(new Insets(2,0,0,0));
+                    imageView.setOnMouseClicked(event -> Platform.runLater(() -> {
+                        labelElement = animalStats.lookup("#animalLabel");
+                        Label label = (Label) labelElement;
+                        label.setText( ((Animal)element).getAnimalStatistics());
+                    }));
+
+
                 }
                 box.getChildren().add(imageView);
             } catch (IOException e) {
                 System.out.println("Exception: " + e.getMessage());
             }
-//            if (element.getLabelName() != null ){
-//                Label label = new Label(element.getLabelName());
-//                box.getChildren().add(label);
-//                label.setFont(new Font(10));
-//            }
+
             box.setAlignment(Pos.CENTER);
         }
     }
@@ -52,5 +59,6 @@ public class GuiElementBox {
         rootElement.add(box, x, y);
     }
 }
+
 
 
