@@ -128,9 +128,9 @@ public class Animal extends AbstractMapElement {
     }
     // gui
     public String getImagePath() {
-        if (energy < 3) return resourcesPath + "LowEnergyTurtle.png";
-        if (energy <= energyConsumption) return resourcesPath + "MidEnergyTurtle.png";
-        return resourcesPath + "HighEnergyTurtle.png";
+        if (energy < 3) return resourcesPath + "Low.png";
+        if (energy <= energyConsumption) return resourcesPath + "Mid.png";
+        return resourcesPath + "Max.png";
     }
     public String getLabelName() {
         return "["+energy+"]";

@@ -24,8 +24,8 @@ public class SimulationScene {
     public void setScene(Stage primaryStage, SimulationSetup setup){
         //map
         GridPane gridPane = new GridPane();
-        gridPane.setPrefWidth(500);
-        gridPane.setPrefHeight(500);
+        gridPane.setMaxWidth(500);
+        gridPane.setMaxHeight(500);
         gridPane.setGridLinesVisible(true);
         gridPane.setPadding(new Insets(20, 20, 20, 20));
 
@@ -110,6 +110,5 @@ public class SimulationScene {
         }
     }
 }
-
 
 
