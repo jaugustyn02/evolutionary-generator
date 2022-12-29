@@ -1,5 +1,5 @@
 mapVariant=false
-mapHeight=8
+mapHeight=10
 mapWidth=10
 plantPreferencesVariant=false
 initialNumOfPlants=10

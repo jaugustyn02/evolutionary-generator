@@ -17,11 +17,14 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalPositionCorr
     public final static Vector2d lowerLeft = new Vector2d(0 ,0);
     private final Vector2d upperRight;
     private final MapVisualizer mapVisualizer = new MapVisualizer(this);
+    private final int equatorBottom, equatorTop;
 
     private final List<IPlantPlacementObserver> plantObservers = new LinkedList<>();
 
     protected AbstractWorldMap(Vector2d upperRight) {
         this.upperRight = upperRight;
+        this.equatorBottom =  (int) ((upperRight.y - lowerLeft.y) * 0.4);
+        this.equatorTop=  (int) ((upperRight.y - lowerLeft.y) * 0.6);
     }
 
     abstract public void correctAnimalPosition(Animal animal);
@@ -162,5 +165,13 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalPositionCorr
     public String toString(){
 //        System.out.println(animalsMap);
         return mapVisualizer.draw(this.getLowerLeft(), this.getUpperRight());
+    }
+    @Override
+    public int getEquatorBottom(){
+        return equatorBottom;
+    }
+    @Override
+    public int getEquatorTop(){
+        return equatorTop;
     }
 }
