@@ -105,6 +105,11 @@ public class MenuApp extends Application {
                     BufferedReader bf = new BufferedReader(file);
                     SimulationSetup setup = (new SetupParser()).parseSetup(bf.lines().toArray(String[]::new));
                     if(setup != null) {
+                        if(!setup.isValid()){
+                            System.out.println("Selected configuration is not valid");
+                            return;
+                        }
+
                         Stage newStage = new Stage();
                         String setupFileName = selectedFile.get().getName();
                         String setupRawFileName = setupFileName.substring(0, setupFileName.length() - 4);
@@ -112,6 +117,7 @@ public class MenuApp extends Application {
                         String csvFileName = (csvCheckBox.isSelected() ?
                                 "s"+simulationNum+"_"+setupRawFileName+"_stats.csv" : null);
                         (new SimulationScene()).setScene(newStage, setup, csvFileName);
+                        System.out.println("Simulation statistics filename is: "+csvFileName);
                         newStage.setFullScreen(true);
                         newStage.show();
                         simulationNum++;
