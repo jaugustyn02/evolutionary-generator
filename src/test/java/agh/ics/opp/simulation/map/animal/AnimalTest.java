@@ -15,19 +15,11 @@ class AnimalTest {
     private static final int FULL_ENERGY = 10;
     private static final int INIT_ENERGY = 10;
     private static final Vector2d POSITION = new Vector2d(1, 2);
-    private static final IAnimalPositionCorrector CORRECTOR = new IAnimalPositionCorrector() {
-        @Override
-        public void correctAnimalPosition(Animal animal) {
-        }
+    private static final IAnimalPositionCorrector CORRECTOR = animal -> {
     };
-    private static final IGeneSelector SELECTOR = new IGeneSelector() {
-        @Override
-        public int getNextGeneIndex(int currentGeneIndex) {
-            return (currentGeneIndex + 1) % GENOME.length;
-        }
-    };
+    private static final IGeneSelector SELECTOR = currentGeneIndex -> (currentGeneIndex + 1) % GENOME.length;
 
-    private Animal animal = new Animal(POSITION, INIT_ENERGY, FULL_ENERGY, ENERGY_CONSUMPTION, GENOME, CORRECTOR, SELECTOR);
+    private final Animal animal = new Animal(POSITION, INIT_ENERGY, FULL_ENERGY, ENERGY_CONSUMPTION, GENOME, CORRECTOR, SELECTOR);
 
     @Test
     void shouldReduceEnergy() {

@@ -23,12 +23,7 @@ public class Plant extends AbstractMapElement {
 
     @Override
     public String getImagePath() {
-        return resourcesPath + "plant.png";
-    }
-
-    @Override
-    public String getLabelName() {
-        return null;
+        return resourcesPath + "Tree.png";
     }
 
     @Override

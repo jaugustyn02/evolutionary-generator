@@ -48,7 +48,6 @@ public class SetupParser {
             System.out.println("Setup parse error: "+e.getMessage());
             return null;
         }
-//        List<String> args = Arrays.stream(lines).map(line -> line.trim().split("=")[1]).toList();
         int i = 0;
         try {
             return new SimulationSetup(

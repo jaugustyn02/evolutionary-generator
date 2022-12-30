@@ -16,7 +16,6 @@ public class BoundedMutator implements IGenomeMutator {
     @Override
     public int[] getMutatedGenome(int[] genome) {
         int randomNumOfMutations = ThreadLocalRandom.current().nextInt(minNumOfMutations, maxNumOfMutations+1);
-//        System.out.println("Genom przechodzi mutacje "+randomNumOfMutations+" genów z "+Arrays.toString(genome));
         int changesCounter = 0;
         int indexToMutate;
         int newGene;
@@ -32,7 +31,6 @@ public class BoundedMutator implements IGenomeMutator {
                 changedGenes[indexToMutate] = true;
             }
         }
-//        System.out.println("                                na "+Arrays.toString(genome));
         return genome;
     }
 }

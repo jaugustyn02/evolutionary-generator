@@ -118,21 +118,19 @@ public class Animal extends AbstractMapElement {
     public int getNextGeneIndex(){
         return nextGeneIndex;
     }
-    //do testów
     public void setDirection(MapDirection direction) {
         this.direction = direction;
     }
 
     public String toString(){
         return energy.toString();
-//        return "{"+energy+","+age+","+numOfDescendants+":"+position+"}";
     }
     // gui
     public String getImagePath() {
-        if (energy == 0) return resourcesPath + "Dead.png";
-        if (energy < 3) return resourcesPath + "Low.png";
-        if (energy <= energyConsumption) return resourcesPath + "Mid.png";
-        return resourcesPath + "Max.png";
+        if (energy == 0) return resourcesPath + "Dead1.png";
+        if (energy < 3) return resourcesPath + "Low1.png";
+        if (energy <= energyConsumption) return resourcesPath + "Mid1.png";
+        return resourcesPath + "Max1.png";
     }
     public String getLabelName() {
         return "["+energy+"]";

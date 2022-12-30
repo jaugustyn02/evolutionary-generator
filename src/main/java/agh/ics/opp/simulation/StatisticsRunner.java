@@ -103,7 +103,6 @@ public class StatisticsRunner {
 
     public String convertToCSV(List<String> data) {
         return data.stream().map(s -> (s.contains(",") ? '"'+s+'"' : s)).collect(Collectors.joining(","));
-//        return String.join(",", data);
     }
 }
 

@@ -1,6 +1,6 @@
 package agh.ics.opp.simulation.map.elements.animal;
 
-import agh.ics.opp.simulation.map.elements.animal.generators.AnimalGenerator;
+import agh.ics.opp.simulation.map.elements.animal.genome.generators.AnimalGenerator;
 
 public class AnimalBreeder {
     private final AnimalGenerator animalGenerator;

@@ -27,13 +27,11 @@ public class SimulationScene {
         gridPane.setMaxWidth(800);
         gridPane.setMaxHeight(800);
         gridPane.setGridLinesVisible(true);
-//        gridPane.setPadding(new Insets(0, 0, 20, 0)); // 0 20 20 0
 
         // pause button
         Button pauseButton = new Button();
         pauseButton.setText("Pause");
         pauseButton.setFont(new Font(20));
-//        pauseButton.setStyle("-fx-background-color: #ff0000; ");
         String cssLayoutPause = ("""
                 -fx-background-color:rgba(238,18,18,0.74);
                     -fx-background-radius: 30;
@@ -71,7 +69,7 @@ public class SimulationScene {
         LineChart<Number, Number> animalCount = new LineChart<>(xAxis, yAxis);
         animalCount.setId("chart");
         animalCount.setCreateSymbols(false);
-//        animalCount.setStyle("-fx-padding: 0 0 0 20");
+
         //stats
         Label statsLabel = new Label();
         statsLabel.setId("statsLabel");
@@ -88,11 +86,10 @@ public class SimulationScene {
 
         HBox statsPlace = new HBox(animalCount, statsBox);
         statsPlace.setSpacing(20);
-        //HBox top = new HBox(mapBox, statsPlace);
 
 
         //animal stats
-        Label animalLabel = new Label();
+        Label animalLabel = new Label("Animal not selected");
         animalLabel.setId("animalLabel");
         animalLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 14pt; -fx-padding: 40 40 40 20; -fx-line-spacing: 10");
         VBox animalStats = new VBox(animalLabel);
@@ -130,14 +127,12 @@ public class SimulationScene {
             pauseButton.setOnAction((event) -> {
                 if(engine.isPaused()){
                     pauseButton.setText("Pause");
-//                    pauseButton.setStyle("-fx-background-color: #ff0000; ");
                     pauseButton.setStyle(cssLayoutPause);
                     engine.resume();
                 }
                 else {
                     pauseButton.setText("Resume");
                     renderer.render(true);
-//                    pauseButton.setStyle("-fx-background-color: #00ff00; ");
                     pauseButton.setStyle(cssLayoutResume);
                     engine.pause();
                     engineThread.interrupt();

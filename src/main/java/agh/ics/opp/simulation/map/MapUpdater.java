@@ -1,7 +1,7 @@
 package agh.ics.opp.simulation.map;
 
 import agh.ics.opp.simulation.map.elements.animal.AnimalBreeder;
-import agh.ics.opp.simulation.map.elements.animal.generators.AnimalGenerator;
+import agh.ics.opp.simulation.map.elements.animal.genome.generators.AnimalGenerator;
 import agh.ics.opp.simulation.map.elements.plant.generators.*;
 import agh.ics.opp.simulation.map.elements.animal.Animal;
 import agh.ics.opp.simulation.map.elements.plant.Plant;
@@ -38,12 +38,12 @@ public class MapUpdater implements IMapUpdater {
     }
 
     public void nextDay() {
-        removeDeadAnimals();  // git
-        moveAnimals();        // fix order
-        feedAnimals();        // git
-        breedAnimals();       // git
-        growPlants();         // git
-        endTheDay();          // fix order
+        removeDeadAnimals();
+        moveAnimals();
+        feedAnimals();
+        breedAnimals();
+        growPlants();
+        endTheDay();
     }
 
     private void removeDeadAnimals() {

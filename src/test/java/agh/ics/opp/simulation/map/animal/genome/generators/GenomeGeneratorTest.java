@@ -1,6 +1,4 @@
 package agh.ics.opp.simulation.map.animal.genome.generators;
-
-import agh.ics.opp.simulation.map.GlobeMap;
 import agh.ics.opp.simulation.map.elements.animal.Animal;
 import agh.ics.opp.simulation.map.elements.animal.behaviours.OrderlySelector;
 import agh.ics.opp.simulation.map.elements.animal.genome.generators.GenomeGenerator;
@@ -58,15 +56,15 @@ public class GenomeGeneratorTest {
         Animal parent1 = new Animal(new Vector2d(0, 0), 50, 100, 1, parent1Genome, null, selector);
         Animal parent2 = new Animal(new Vector2d(0, 0), 50, 100, 1, parent2Genome, null, selector);
 
-        int numOfIterations = 100;
+        int count = 100;
         int numOfParent1FirstGenomes = 0;
-        for (int i = 0; i < numOfIterations; i++) {
+        for (int i = 0; i < count; i++) {
             int[] descendantGenome = genomeGenerator.getDescendantGenome(parent1, parent2);
             if (Arrays.equals(Arrays.copyOfRange(parent1Genome, 0, genomeLength / 2), Arrays.copyOfRange(descendantGenome, 0, genomeLength / 2))) {
                 numOfParent1FirstGenomes++;
             }
         }
         assertTrue(numOfParent1FirstGenomes > 0);
-        assertTrue(numOfParent1FirstGenomes < numOfIterations);
+        assertTrue(numOfParent1FirstGenomes < count);
     }
 }

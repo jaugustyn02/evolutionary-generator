@@ -2,10 +2,7 @@ package agh.ics.opp.simulation.map.animal.behaviours;
 
 import agh.ics.opp.simulation.map.elements.animal.behaviours.ChaoticSelector;
 import org.junit.jupiter.api.Test;
-
 import java.util.concurrent.ThreadLocalRandom;
-
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ChaoticSelectorTest {

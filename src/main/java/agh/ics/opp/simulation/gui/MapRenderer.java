@@ -19,7 +19,7 @@ public class MapRenderer{
     private final IWorldMap map;
     public int fieldGrow;
     private IAnimalClickedObserver animalObserver;
-    private StatisticsRunner stats;
+    private final StatisticsRunner stats;
 
     public MapRenderer(GridPane rootPane, IWorldMap map, StatisticsRunner stats) throws FileNotFoundException {
         this.rootPane = rootPane;
@@ -65,37 +65,4 @@ public class MapRenderer{
         }
     }
 
-
-
-
-//    public void render(){
-//        Platform.runLater(() -> {
-//            rootPane.getColumnConstraints().clear();
-//            rootPane.getRowConstraints().clear();
-//            rootPane.getChildren().clear();
-//            rootPane.setGridLinesVisible(true);
-//
-//            rootPane.getColumnConstraints().add(new ColumnConstraints(fieldGrow));
-//            renderHeader();
-//
-//            for (int row = upperRight.y; row >= lowerLeft.y; row--) {
-//                renderRow(row);
-//            }
-//        });
-//    }
-//
-//    private void renderHeader(){
-//        rootPane.getRowConstraints().add(new RowConstraints(this.fieldGrow));
-//        for (int col = lowerLeft.x; col <= upperRight.x; col++) {
-//            rootPane.getColumnConstraints().add(new ColumnConstraints(fieldGrow));
-//        }
-//    }
-//
-//    private void renderRow(int row){
-//        rootPane.getRowConstraints().add(new RowConstraints(this.fieldGrow));
-//        for (int col = lowerLeft.x; col <= upperRight.x; col++){
-//            GuiElementBox elementBox = new GuiElementBox((IMapElement) this.map.objectAt(new Vector2d(col, row)), fieldGrow);
-//            elementBox.renderElement(rootPane, map, col - lowerLeft.x + 1, upperRight.y - row + 1);
-//        }
-//    }
 }

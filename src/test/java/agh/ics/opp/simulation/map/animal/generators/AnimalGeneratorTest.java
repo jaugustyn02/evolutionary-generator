@@ -3,7 +3,7 @@ package agh.ics.opp.simulation.map.animal.generators;
 import agh.ics.opp.simulation.map.GlobeMap;
 import agh.ics.opp.simulation.map.elements.animal.Animal;
 import agh.ics.opp.simulation.map.elements.animal.behaviours.ChaoticSelector;
-import agh.ics.opp.simulation.map.elements.animal.generators.AnimalGenerator;
+import agh.ics.opp.simulation.map.elements.animal.genome.generators.AnimalGenerator;
 import agh.ics.opp.simulation.types.SimulationSetup;
 import agh.ics.opp.simulation.types.Vector2d;
 import org.junit.jupiter.api.Test;

@@ -55,14 +55,14 @@ public class SimulationEngine implements IEngine, Runnable, IAnimalClickedObserv
             synchronized (this) {
                 try {
                     Thread.sleep(moveDelay);
-                } catch (InterruptedException e) {
-//                    System.out.println("Exception: The simulation has been aborted (1)");
+                } catch (InterruptedException ignored) {
+
                 }
                 while (paused) {
                     try {
                         wait();
-                    } catch (InterruptedException e) {
-//                        System.out.println("Exception: The simulation has been aborted (2)");
+                    } catch (InterruptedException ignored) {
+
                     }
                 }
                 dayNum++;

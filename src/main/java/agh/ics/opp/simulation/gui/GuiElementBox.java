@@ -18,7 +18,7 @@ import java.util.Arrays;
 
 public class GuiElementBox {
     private final VBox box = new VBox();
-    //public Node labelElement;
+
 
     public GuiElementBox(IMapElement element, int fieldGrow, IAnimalClickedObserver animalObserver, int[] mostPopularGenome) {
         box.setStyle("-fx-background-color: #99FF8A; -fx-border-color: #6DD945; -fx-border-width: 2px; -fx-border-top-width: 0px; -fx-border-left-width: 0px");
@@ -39,12 +39,7 @@ public class GuiElementBox {
                     }
                     imageView.setFitHeight(fieldGrow-5);
                     imageView.setFitWidth(Math.round((fieldGrow-5)*0.9));
-                    imageView.setOnMouseClicked(event -> Platform.runLater(() -> {
-                        animalObserver.animalClicked(animal);
-//                        labelElement = animalStats.lookup("#animalLabel");
-//                        Label label = (Label) labelElement;
-//                        label.setText( ((Animal)element).getAnimalStatistics());
-                    }));
+                    imageView.setOnMouseClicked(event -> Platform.runLater(() -> animalObserver.animalClicked(animal)));
 
 
                 }
@@ -52,11 +47,7 @@ public class GuiElementBox {
             } catch (IOException e) {
                 System.out.println("Exception: " + e.getMessage());
             }
-//            if (element.getLabelName() != null ){
-//                Label label = new Label(element.getLabelName());
-//                box.getChildren().add(label);
-//                label.setFont(new Font(10));
-//            }
+
             box.setAlignment(Pos.CENTER);
         }
     }

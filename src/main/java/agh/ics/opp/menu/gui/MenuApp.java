@@ -18,11 +18,9 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
-
 import java.io.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static javafx.scene.text.FontWeight.*;
 
 
 public class MenuApp extends Application {

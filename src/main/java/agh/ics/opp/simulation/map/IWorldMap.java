@@ -22,14 +22,14 @@ public interface IWorldMap {
     Animal getLastAnimalAt(Vector2d position);
     Animal getSecondAnimalAt(Vector2d position);
     Animal popFirstAnimalAt(Vector2d position);
-    Animal popLastAnimalAt(Vector2d position);
+    void popLastAnimalAt(Vector2d position);
     Map<Vector2d, UpdatableTreeSet> getAnimalsMap();
     Set<Animal> getAnimalsSet();
     List<Vector2d> getAnimalsPositions();
     List<Vector2d> getPlantsPositions();
     Plant getPlantAt(Vector2d position);
     boolean isAnimalAt(Vector2d position);
-    boolean isPlantAt(Vector2d position);
+
     int getWidth();
     int getHeight();
     int getEquatorBottom();

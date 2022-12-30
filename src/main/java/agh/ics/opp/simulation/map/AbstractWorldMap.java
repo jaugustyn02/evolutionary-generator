@@ -69,10 +69,6 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalPositionCorr
         return objectAt(position) != null;
     }
     @Override
-    public boolean isPlantAt(Vector2d position){
-        return plants.get(position) != null;
-    }
-    @Override
     public boolean isAnimalAt(Vector2d position){
         return animalsMap.get(position) != null;
     }
@@ -83,10 +79,9 @@ abstract public class AbstractWorldMap implements IWorldMap, IAnimalPositionCorr
         return animal;
     }
     @Override
-    public Animal popLastAnimalAt(Vector2d position){
+    public void popLastAnimalAt(Vector2d position){
         Animal animal = getLastAnimalAt(position);
         if (animal != null) removeMapElement(animal);
-        return animal;
     }
     @Override
     public Animal getFirstAnimalAt(Vector2d position){

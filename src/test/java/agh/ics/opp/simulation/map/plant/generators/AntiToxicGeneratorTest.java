@@ -1,7 +1,5 @@
 package agh.ics.opp.simulation.map.plant.generators;
-
 import agh.ics.opp.simulation.map.GlobeMap;
-import agh.ics.opp.simulation.map.IWorldMap;
 import agh.ics.opp.simulation.map.elements.plant.Plant;
 import agh.ics.opp.simulation.map.elements.plant.generators.AntiToxicGenerator;
 import agh.ics.opp.simulation.types.SimulationSetup;
@@ -36,7 +34,7 @@ public class AntiToxicGeneratorTest {
 
         AntiToxicGenerator generator = new AntiToxicGenerator(map, 10);
         int before = generator.getNumOfZeroDeathsEmptySquares();
-        Plant plant = generator.generatePlant();
+        generator.generatePlant();
         int after = generator.getNumOfZeroDeathsEmptySquares();
         assertEquals(before, after);
     }
@@ -44,7 +42,6 @@ public class AntiToxicGeneratorTest {
 
     @Test
     public void testPlantPlaced() {
-        // given
         SimulationSetup setup = new SimulationSetup(false, 100, 100, false, 0, 0, 0, false, 0, 0, 0, 0, 0, false, 0, 0);
         GlobeMap map = new GlobeMap(setup);
         int plantEnergy = 10;
