@@ -1,6 +1,6 @@
 mapVariant=true
 mapHeight=20
-mapWidth=30
+mapWidth=25
 plantPreferencesVariant=false
 initialNumOfPlants=30
 numOfPlantsPerDay=10

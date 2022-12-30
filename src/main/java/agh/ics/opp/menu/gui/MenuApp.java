@@ -117,7 +117,9 @@ public class MenuApp extends Application {
                         String csvFileName = (csvCheckBox.isSelected() ?
                                 "s"+simulationNum+"_"+setupRawFileName+"_stats.csv" : null);
                         (new SimulationScene()).setScene(newStage, setup, csvFileName);
-                        System.out.println("Simulation statistics filename is: "+csvFileName);
+                        if (csvFileName != null){
+                            System.out.println("Simulation statistics filename is: "+csvFileName);
+                        }
                         newStage.setFullScreen(true);
                         newStage.show();
                         simulationNum++;

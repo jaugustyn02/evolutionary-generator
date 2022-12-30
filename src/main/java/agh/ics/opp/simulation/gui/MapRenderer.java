@@ -12,6 +12,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 //import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
 
@@ -20,15 +21,17 @@ public class MapRenderer{
     private final GridPane rootPane;
     private final Vector2d lowerLeft;
     private final Vector2d upperRight;
+    public VBox animalStats;
     private final IWorldMap map;
     public int fieldGrow;
 
-    public MapRenderer(GridPane rootPane, IWorldMap map) throws FileNotFoundException {
+    public MapRenderer(GridPane rootPane, IWorldMap map, VBox animalStats) throws FileNotFoundException {
         this.rootPane = rootPane;
         this.lowerLeft = map.getLowerLeft();
         this.upperRight = map.getUpperRight();
         this.map = map;
         this.fieldGrow = 800/(Math.max(map.getHeight(), map.getWidth()));
+        this.animalStats = animalStats;
     }
 
     public void render(){
@@ -55,7 +58,7 @@ public class MapRenderer{
     private void renderRow(int row){
         rootPane.getRowConstraints().add(new RowConstraints(this.fieldGrow));
         for (int col = 0; col <= upperRight.x-lowerLeft.x; col++){
-            GuiElementBox elementBox = new GuiElementBox((IMapElement) this.map.objectAt(new Vector2d(col, row)), fieldGrow);
+            GuiElementBox elementBox = new GuiElementBox((IMapElement) this.map.objectAt(new Vector2d(col, row)), fieldGrow, animalStats);
             elementBox.renderElement(rootPane, map, col - lowerLeft.x, upperRight.y - row);
         }
     }

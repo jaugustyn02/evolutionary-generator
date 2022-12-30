@@ -26,6 +26,7 @@ public class SimulationEngine implements IEngine, Runnable{
     private volatile boolean running = true;
     private volatile boolean paused = false;
 
+
     public SimulationEngine(SimulationSetup setup, IWorldMap map, MapRenderer renderer, StatisticsRunner stats, HBox statsPlace) {
         this.updater = new MapUpdater(map, setup);
         this.renderer = renderer;
@@ -34,6 +35,10 @@ public class SimulationEngine implements IEngine, Runnable{
         this.animalData.setName("Number of animals");
         this.plantData.setName("Number of plants");
         this.renderer.render();
+        chart = statsPlace.lookup("#chart");
+        @SuppressWarnings("unchecked") LineChart<Number, Number> chart1 = (LineChart<Number, Number>)chart;
+        chart1.getData().add(animalData);
+        chart1.getData().add(plantData);
     }
 
     @Override
@@ -61,14 +66,9 @@ public class SimulationEngine implements IEngine, Runnable{
                     element = statsPlace.lookup("#statsLabel");
                     Label label = (Label)element;
                     label.setText("Day: " + (dayNum) + "\n" + stats.getStatistics().toString());
-
-                    chart = statsPlace.lookup("#chart");
-                    LineChart<Number, Number> chart1 = (LineChart<Number, Number>)chart;
-
                     animalData.getData().add(new XYChart.Data<>(dayNum, stats.getNumOfAnimals()));
-                    chart1.getData().add(animalData);
                     plantData.getData().add(new XYChart.Data<>(dayNum, stats.getNumOfPlants()));
-                    chart1.getData().add(plantData);
+
                 });
 
             }

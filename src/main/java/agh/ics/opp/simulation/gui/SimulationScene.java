@@ -74,7 +74,12 @@ public class SimulationScene {
 
 
         //animal stats
-        VBox animalStats = new VBox();
+        Label animalLabel = new Label();
+        animalLabel.setId("animalLabel");
+        animalLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 14pt; -fx-padding: 40 40 40 20; -fx-line-spacing: 10");
+        VBox animalStats = new VBox(animalLabel);
+
+        animalStats.setStyle(cssLayout);
 
 
         // all on page
@@ -95,7 +100,7 @@ public class SimulationScene {
                     new HellPortalMap(setup) :  // true
                     new GlobeMap(setup)         // false
             );
-            MapRenderer renderer = new MapRenderer(gridPane, map);
+            MapRenderer renderer = new MapRenderer(gridPane, map, animalStats);
 
             StatisticsRunner stats = new StatisticsRunner(map, csvFileName);
             final SimulationEngine engine = new SimulationEngine(setup, map, renderer, stats , statsPlace);
