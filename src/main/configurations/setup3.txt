@@ -1,0 +1,16 @@
+mapVariant=false
+mapHeight=14
+mapWidth=18
+plantPreferencesVariant=true
+initialNumOfPlants=20
+numOfPlantsPerDay=6
+plantEnergy=6
+animalBehaviorsVariant=false
+initialNumOfAnimals=20
+initialAnimalEnergy=14
+fullAnimalEnergy=10
+animalEnergyConsumption=5
+genomeLength=3
+mutationsVariant=true
+minNumOfMutations=1
+maxNumOfMutations=3

@@ -66,9 +66,9 @@ public record SimulationSetup(
                         valid = false;
                         System.out.println("animalEnergyConsumption must be from range [1, fullAnimalEnergy="+fullAnimalEnergy+"]");
                 }
-                if(genomeLength < 1 || genomeLength > 12){
+                if(genomeLength < 2 || genomeLength > 10){
                         valid = false;
-                        System.out.println("genomeLength must be from range [1, 12]");
+                        System.out.println("genomeLength must be from range [2, 10]");
                 }
                 if(minNumOfMutations < 0 || minNumOfMutations > genomeLength){
                         valid = false;
