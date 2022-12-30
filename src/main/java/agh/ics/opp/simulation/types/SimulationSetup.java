@@ -70,13 +70,13 @@ public record SimulationSetup(
                         valid = false;
                         System.out.println("genomeLength must be from range [1, 12]");
                 }
-                if(minNumOfMutations < 0){
+                if(minNumOfMutations < 0 || minNumOfMutations > genomeLength){
                         valid = false;
-                        System.out.println("minNumOfMutations must be greater or equal 0");
+                        System.out.println("minNumOfMutations must be from range [0, genomeLength=" +genomeLength +"]");
                 }
-                if(maxNumOfMutations < minNumOfMutations){
+                if(maxNumOfMutations < minNumOfMutations || maxNumOfMutations > genomeLength){
                         valid = false;
-                        System.out.println("maxNumOfMutations must be greater or equal minNumOfMutations="+minNumOfMutations);
+                        System.out.println("maxNumOfMutations must be fro range [minNumOfMutations="+minNumOfMutations+", genomeLength="+genomeLength+"]");
                 }
                 return valid;
         }

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BoundenMutationTest {
     @Test
-    public void testGetMutatedGenome_correctLength() {
+    public void correctLength() {
         int genomeLength = 10;
         int minNumOfMutations = 1;
         int maxNumOfMutations = 3;
@@ -19,7 +19,7 @@ public class BoundenMutationTest {
         assertEquals(genomeLength, mutatedGenome.length);
     }
     @Test
-    public void testGetMutatedGenome_correctNumberOfMutations() {
+    public void correctNumberOfMutations() {
         int genomeLength = 10;
         int minNumOfMutations = 2;
         int maxNumOfMutations = 4;
@@ -46,7 +46,7 @@ public class BoundenMutationTest {
         return count;
     }
     @Test
-    public void testGetMutatedGenome_correctMutationRange() {
+    public void correctMutationRange() {
         int genomeLength = 10;
         int minNumOfMutations = 1;
         int maxNumOfMutations = 3;

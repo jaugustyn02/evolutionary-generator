@@ -2,16 +2,16 @@ package agh.ics.opp.simulation.gui;
 
 import agh.ics.opp.simulation.IAnimalClickedObserver;
 import agh.ics.opp.simulation.map.IWorldMap;
-import agh.ics.opp.simulation.map.elements.animal.Animal;
 import agh.ics.opp.simulation.map.elements.IMapElement;
+import agh.ics.opp.simulation.map.elements.animal.Animal;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Label;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,7 +33,9 @@ public class GuiElementBox {
                 imageView.setFitHeight(fieldGrow-5);
                 if(element instanceof Animal animal) {
                     if(Arrays.equals(mostPopularGenome, animal.getGenome())){
-                        imageView.setStyle("-fx-border-color: yellow;  -fx-border-width: 2px;");
+                        ColorAdjust colorAdjust = new ColorAdjust();
+                        colorAdjust.setBrightness(0.5); // Increase brightness by 0.5
+                        imageView.setEffect(colorAdjust);
                     }
                     imageView.setFitHeight(fieldGrow-5);
                     imageView.setFitWidth(Math.round((fieldGrow-5)*0.9));

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ChaoticSelectorTest {
     @Test
-    public void testGetNextGeneIndex_withinGenomeBounds() {
+    public void withinGenomeBounds() {
         ChaoticSelector chaoticSelector = new ChaoticSelector(10);
         for (int i = 0; i < 100; i++) {
             int currentGeneIndex = ThreadLocalRandom.current().nextInt(0, 10);

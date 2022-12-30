@@ -18,7 +18,6 @@ class AnimalTest {
     private static final IAnimalPositionCorrector CORRECTOR = new IAnimalPositionCorrector() {
         @Override
         public void correctAnimalPosition(Animal animal) {
-            // do nothing
         }
     };
     private static final IGeneSelector SELECTOR = new IGeneSelector() {
@@ -76,26 +75,21 @@ class AnimalTest {
     }
     @Test
     public void hasLivedDayTest() {
-        // given
+
         Animal animal = new Animal(new Vector2d(0,0), 10, 10, 2, new int[]{0,0,0,0,0}, CORRECTOR, SELECTOR);
 
-        // when
         animal.hasLivedDay();
 
-        // then
         assertEquals(9, animal.getEnergy());
         assertEquals(1, animal.getAge());
     }
 
     @Test
     public void hasBredTest() {
-        // given
-        Animal animal = new Animal(new Vector2d(0,0), 10, 10, 2, new int[]{0,0,0,0,0}, CORRECTOR, SELECTOR);
 
-        // when
+        Animal animal = new Animal(new Vector2d(0,0), 10, 10, 2, new int[]{0,0,0,0,0}, CORRECTOR, SELECTOR);
         animal.hasBred();
 
-        // then
         assertEquals(8, animal.getEnergy());
         assertEquals(1, animal.getNumOfDescendants());
     }

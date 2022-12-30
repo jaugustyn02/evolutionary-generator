@@ -78,6 +78,8 @@ public class StatisticsRunner {
         numOfDeadAnimals += animals.stream().filter(animal -> animal.getEnergy() == 0).count();
         sumOfDeadAnimalsLifeSpan += animals.stream().filter(animal -> animal.getEnergy() == 0).mapToInt(Animal::getAge).sum();
         avgAnimalLifeSpan = (double) sumOfDeadAnimalsLifeSpan / numOfDeadAnimals;
+        //System.out.println(animals.stream().collect(Collectors.groupingBy(Animal::getGenome, Collectors.counting()))
+        //        toString());
 
         if(saveToFile) saveToCSVFile(dayNum);
     }

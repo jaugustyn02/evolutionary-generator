@@ -21,7 +21,7 @@ public class UnboundedMutatorTest {
     @Test
     public void correctNumberOfMutations() {
         int genomeLength = 10;
-        int minNumOfMutations = 1;
+        int minNumOfMutations =1;
         int maxNumOfMutations = 3;
         UnboundedMutator genomeMutator = new UnboundedMutator(minNumOfMutations, maxNumOfMutations);
 
@@ -44,7 +44,7 @@ public class UnboundedMutatorTest {
         return count;
     }
     @Test
-    public void testGetMutatedGenome_correctMutationRange() {
+    public void correctMutationRange() {
         int genomeLength = 10;
         int minNumOfMutations = 1;
         int maxNumOfMutations = 3;

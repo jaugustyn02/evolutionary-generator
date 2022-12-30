@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GenomeGeneratorTest {
     @Test
-    public void testGetRandomGenome_correctLength() {
+    public void correctLength() {
         int genomeLength = 10;
         GenomeGenerator genomeGenerator = new GenomeGenerator(genomeLength);
 
@@ -22,11 +22,11 @@ public class GenomeGeneratorTest {
         assertEquals(genomeLength, randomGenome.length);
     }
     @Test
-    public void testGetDescendantGenome_correctEnergyRatio() {
+    public void correctEnergyRatio() {
         int genomeLength = 10;
         GenomeGenerator genomeGenerator = new GenomeGenerator(genomeLength);
         OrderlySelector selector = new OrderlySelector(10);
-        //GlobeMap map = new GlobeMap(setup);
+
         int[] parent1Genome = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         int[] parent2Genome = new int[] {11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
         Animal parent1 = new Animal(new Vector2d(0, 0), 50, 100, 1, parent1Genome,null , selector);
@@ -49,7 +49,7 @@ public class GenomeGeneratorTest {
         return count;
     }
     @Test
-    public void testGetDescendantGenome_randomComposition() {
+    public void randomComposition() {
         int genomeLength = 10;
         GenomeGenerator genomeGenerator = new GenomeGenerator(genomeLength);
         OrderlySelector selector = new OrderlySelector(10);

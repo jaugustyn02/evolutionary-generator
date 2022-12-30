@@ -42,7 +42,7 @@ public class SimulationEngine implements IEngine, Runnable, IAnimalClickedObserv
         this.animalStats = animalStats;
         this.animalData.setName("Number of animals");
         this.plantData.setName("Number of plants");
-        this.renderer.render();
+        this.renderer.render(false);
         chart = statsPlace.lookup("#chart");
         @SuppressWarnings("unchecked") LineChart<Number, Number> chart1 = (LineChart<Number, Number>)chart;
         chart1.getData().add(animalData);
@@ -67,8 +67,8 @@ public class SimulationEngine implements IEngine, Runnable, IAnimalClickedObserv
                 }
                 dayNum++;
                 updater.nextDay();      // simulate next day
-                this.renderer.render();
                 stats.updateStatistics(dayNum);       // updating statistics after next day passed
+                this.renderer.render(false);
                 updateStatsChart();
                 if(trackedAnimal!= null){updateAnimalStats();}
 

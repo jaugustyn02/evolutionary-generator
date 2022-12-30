@@ -12,5 +12,5 @@ fullAnimalEnergy=7
 animalEnergyConsumption=4
 genomeLength=10
 mutationsVariant=true
-minNumOfMutations=1
-maxNumOfMutations=7
+minNumOfMutations=2
+maxNumOfMutations=5

@@ -113,7 +113,6 @@ public class SimulationScene {
 
             pauseButton.setOnAction((event) -> {
                 if(engine.isPaused()){
-                    System.out.println(stats.getStatistics());
                     pauseButton.setText("Pause");
 //                    pauseButton.setStyle("-fx-background-color: #ff0000; ");
                     pauseButton.setStyle("-fx-background-color: #ed2b2b; ");
@@ -121,6 +120,7 @@ public class SimulationScene {
                 }
                 else {
                     pauseButton.setText("Resume");
+                    renderer.render(true);
 //                    pauseButton.setStyle("-fx-background-color: #00ff00; ");
                     pauseButton.setStyle("-fx-background-color: #72f542; ");
                     engine.pause();
