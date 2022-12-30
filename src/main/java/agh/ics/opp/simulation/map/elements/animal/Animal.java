@@ -144,7 +144,7 @@ public class Animal extends AbstractMapElement {
                 "Animal energy: "  + this.energy+ "\n" +
                 "Eaten plants: " + this.numOfEatenPlants +"\n" +
                 "Number of descendants: " + this.numOfDescendants+ "\n" +
-                "Number of days lived: " + this.age+ "\n";
+                "Number of days lived: " + this.age;
 
     }
 }

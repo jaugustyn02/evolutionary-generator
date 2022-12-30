@@ -1,5 +1,6 @@
 package agh.ics.opp.simulation.gui;
 
+import agh.ics.opp.simulation.IAnimalClickedObserver;
 import agh.ics.opp.simulation.map.IWorldMap;
 import agh.ics.opp.simulation.map.elements.animal.Animal;
 import agh.ics.opp.simulation.map.elements.IMapElement;
@@ -13,12 +14,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class GuiElementBox {
     private final VBox box = new VBox();
-    public Node labelElement;
+    //public Node labelElement;
 
-    public GuiElementBox(IMapElement element, int fieldGrow, VBox animalStats) {
+    public GuiElementBox(IMapElement element, int fieldGrow, IAnimalClickedObserver animalObserver, int[] mostPopularGenome) {
         box.setStyle("-fx-background-color: #99FF8A; -fx-border-color: #6DD945; -fx-border-width: 2px; -fx-border-top-width: 0px; -fx-border-left-width: 0px");
         if (element == null) {
             Label label = new Label(" ");
@@ -29,13 +31,17 @@ public class GuiElementBox {
                 ImageView imageView = new ImageView(image);
                 imageView.setFitWidth(fieldGrow-5);
                 imageView.setFitHeight(fieldGrow-5);
-                if(element instanceof Animal) {
+                if(element instanceof Animal animal) {
+                    if(Arrays.equals(mostPopularGenome, animal.getGenome())){
+                        imageView.setStyle("-fx-border-color: yellow;  -fx-border-width: 2px;");
+                    }
                     imageView.setFitHeight(fieldGrow-5);
                     imageView.setFitWidth(Math.round((fieldGrow-5)*0.9));
                     imageView.setOnMouseClicked(event -> Platform.runLater(() -> {
-                        labelElement = animalStats.lookup("#animalLabel");
-                        Label label = (Label) labelElement;
-                        label.setText( ((Animal)element).getAnimalStatistics());
+                        animalObserver.animalClicked(animal);
+//                        labelElement = animalStats.lookup("#animalLabel");
+//                        Label label = (Label) labelElement;
+//                        label.setText( ((Animal)element).getAnimalStatistics());
                     }));
 
 

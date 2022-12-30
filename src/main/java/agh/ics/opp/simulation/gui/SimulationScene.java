@@ -62,10 +62,12 @@ public class SimulationScene {
         statsLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 14pt; -fx-padding: 20 20 20 20; -fx-line-spacing: 16");
         VBox statsBox = new VBox();
         statsBox.getChildren().add(statsLabel);
-        String cssLayout = "-fx-border-color: black;\n" +
-                "-fx-border-insets: 5;\n" +
-                "-fx-border-width: 2;\n" +
-                "-fx-border-style: dashed;\n";
+        String cssLayout = """
+                -fx-border-color: black;
+                -fx-border-insets: 5;
+                -fx-border-width: 2;
+                -fx-border-style: dashed;
+                """;
         statsBox.setStyle(cssLayout);
 
         HBox statsPlace = new HBox(animalCount, statsBox);
@@ -100,16 +102,18 @@ public class SimulationScene {
                     new HellPortalMap(setup) :  // true
                     new GlobeMap(setup)         // false
             );
-            MapRenderer renderer = new MapRenderer(gridPane, map, animalStats);
+
 
             StatisticsRunner stats = new StatisticsRunner(map, csvFileName);
-            final SimulationEngine engine = new SimulationEngine(setup, map, renderer, stats , statsPlace);
+            MapRenderer renderer = new MapRenderer(gridPane, map, stats);
+            final SimulationEngine engine = new SimulationEngine(setup, map, renderer, stats , statsPlace, animalStats);
             engine.setMoveDelay(500);
             Thread engineThread = new Thread(engine);
             engineThread.start();
 
             pauseButton.setOnAction((event) -> {
                 if(engine.isPaused()){
+                    System.out.println(stats.getStatistics());
                     pauseButton.setText("Pause");
 //                    pauseButton.setStyle("-fx-background-color: #ff0000; ");
                     pauseButton.setStyle("-fx-background-color: #ed2b2b; ");

@@ -1,19 +1,14 @@
 package agh.ics.opp.simulation.gui;
 
+import agh.ics.opp.simulation.IAnimalClickedObserver;
+import agh.ics.opp.simulation.StatisticsRunner;
 import agh.ics.opp.simulation.map.elements.IMapElement;
 import agh.ics.opp.simulation.map.IWorldMap;
 import agh.ics.opp.simulation.types.Vector2d;
 import javafx.application.Platform;
-//import javafx.geometry.HPos;
-//import javafx.geometry.VPos;
-//import javafx.scene.Node;
-//import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-//import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
-
 import java.io.FileNotFoundException;
 
 
@@ -21,20 +16,27 @@ public class MapRenderer{
     private final GridPane rootPane;
     private final Vector2d lowerLeft;
     private final Vector2d upperRight;
-    public VBox animalStats;
     private final IWorldMap map;
     public int fieldGrow;
+    private IAnimalClickedObserver animalObserver;
+    private StatisticsRunner stats;
 
-    public MapRenderer(GridPane rootPane, IWorldMap map, VBox animalStats) throws FileNotFoundException {
+    public MapRenderer(GridPane rootPane, IWorldMap map, StatisticsRunner stats) throws FileNotFoundException {
         this.rootPane = rootPane;
         this.lowerLeft = map.getLowerLeft();
         this.upperRight = map.getUpperRight();
         this.map = map;
         this.fieldGrow = 800/(Math.max(map.getHeight(), map.getWidth()));
-        this.animalStats = animalStats;
+        this.stats = stats;
+
     }
 
-    public void render(){
+    public void setAnimalObserver(IAnimalClickedObserver animalObserver) {
+        this.animalObserver = animalObserver;
+    }
+
+    public void render(boolean simulationStopped){
+        int[] mostPopularGenome = (simulationStopped ? stats.getStatistics().mostPopularGenome() : null);
         Platform.runLater(() -> {
             rootPane.getColumnConstraints().clear();
             rootPane.getRowConstraints().clear();
@@ -44,7 +46,7 @@ public class MapRenderer{
             addColumnConstraints();
 
             for (int row = upperRight.y-lowerLeft.y; row >= 0; row--) {
-                renderRow(row);
+                renderRow(row, mostPopularGenome);
             }
         });
     }
@@ -55,10 +57,10 @@ public class MapRenderer{
         }
     }
 
-    private void renderRow(int row){
+    private void renderRow(int row, int[] mostPopularGenome){
         rootPane.getRowConstraints().add(new RowConstraints(this.fieldGrow));
         for (int col = 0; col <= upperRight.x-lowerLeft.x; col++){
-            GuiElementBox elementBox = new GuiElementBox((IMapElement) this.map.objectAt(new Vector2d(col, row)), fieldGrow, animalStats);
+            GuiElementBox elementBox = new GuiElementBox((IMapElement) this.map.objectAt(new Vector2d(col, row)), fieldGrow,  animalObserver, mostPopularGenome);
             elementBox.renderElement(rootPane, map, col - lowerLeft.x, upperRight.y - row);
         }
     }
