@@ -14,33 +14,34 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 
 public class SimulationScene {
-    public void setScene(Stage primaryStage, SimulationSetup setup){
+    public void setScene(Stage primaryStage, SimulationSetup setup, String csvFileName){
         //map
         GridPane gridPane = new GridPane();
         gridPane.setMaxWidth(800);
         gridPane.setMaxHeight(800);
         gridPane.setGridLinesVisible(true);
-        gridPane.setPadding(new Insets(0, 20, 20, 0));
+//        gridPane.setPadding(new Insets(0, 0, 20, 0)); // 0 20 20 0
 
         // pause button
         Button pauseButton = new Button();
         pauseButton.setText("Pause");
-        pauseButton.setStyle("-fx-background-color: #ff0000; ");
-        pauseButton.setMinWidth(80);
-        HBox hBox = new HBox(10);
-        hBox.getChildren().add(pauseButton);
-        hBox.setAlignment(Pos.CENTER);
-        VBox mapBox = new VBox(3);
+        pauseButton.setFont(new Font(20));
+//        pauseButton.setStyle("-fx-background-color: #ff0000; ");
+        pauseButton.setStyle("-fx-background-color: #ed2b2b; ");
+        pauseButton.setMinWidth(800);
+        HBox buttonBox = new HBox();
+        buttonBox.getChildren().add(pauseButton);
+        buttonBox.setAlignment(Pos.CENTER);
+        VBox mapBox = new VBox(40);
         mapBox.getChildren().add(gridPane);
-        mapBox.getChildren().add(hBox);
+        mapBox.getChildren().add(buttonBox);
 
         //chart
         NumberAxis xAxis = new NumberAxis();
@@ -54,35 +55,45 @@ public class SimulationScene {
         LineChart<Number, Number> animalCount = new LineChart<>(xAxis, yAxis);
         animalCount.setId("chart");
         animalCount.setCreateSymbols(false);
-        animalCount.setStyle("-fx-padding: 40 0 0 20");
+//        animalCount.setStyle("-fx-padding: 0 0 0 20");
         //stats
         Label statsLabel = new Label();
         statsLabel.setId("statsLabel");
-        statsLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 14pt; -fx-padding: 40 40 40 20; -fx-line-spacing: 10");
-        HBox statsPlace = new HBox(animalCount, statsLabel);
+        statsLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 14pt; -fx-padding: 20 20 20 20; -fx-line-spacing: 16");
+        VBox statsBox = new VBox();
+        statsBox.getChildren().add(statsLabel);
+        String cssLayout = "-fx-border-color: black;\n" +
+                "-fx-border-insets: 5;\n" +
+                "-fx-border-width: 2;\n" +
+                "-fx-border-style: dashed;\n";
+        statsBox.setStyle(cssLayout);
+
+        HBox statsPlace = new HBox(animalCount, statsBox);
+        statsPlace.setSpacing(20);
         //HBox top = new HBox(mapBox, statsPlace);
 
 
         //animal stats
-
         Label animalLabel = new Label();
         animalLabel.setId("animalLabel");
-        animalLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 14pt; -fx-padding: 40 40 40 40; -fx-line-spacing: 10");
+        animalLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 14pt; -fx-padding: 40 40 40 20; -fx-line-spacing: 10");
         VBox animalStats = new VBox(animalLabel);
+
+        animalStats.setStyle(cssLayout);
+
 
         // all on page
         VBox right = new VBox(statsPlace, animalStats);
         right.setMinWidth(900);
 
         HBox root = new HBox(mapBox, right);
+        root.setSpacing(20);
+        root.setPadding(new Insets(40, 0, 0, 40));
         ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
         Scene scene = new Scene(scrollPane, primaryStage.getWidth(), primaryStage.getHeight());
-
-        primaryStage.setScene(scene); // Najważniejsza część - podpięcie sceny do primaryStage
-        // Brak primaryStage.show() - metoda show() jest wywoływana w MenuApp po wykonaniu się tej metody
-        // end
+        primaryStage.setScene(scene);
 
         try {
             IWorldMap map = (setup.mapVariant() ?
@@ -91,7 +102,7 @@ public class SimulationScene {
             );
             MapRenderer renderer = new MapRenderer(gridPane, map, animalStats);
 
-            StatisticsRunner stats = new StatisticsRunner(map);     // temp
+            StatisticsRunner stats = new StatisticsRunner(map, csvFileName);
             final SimulationEngine engine = new SimulationEngine(setup, map, renderer, stats , statsPlace);
             engine.setMoveDelay(500);
             Thread engineThread = new Thread(engine);
@@ -100,12 +111,14 @@ public class SimulationScene {
             pauseButton.setOnAction((event) -> {
                 if(engine.isPaused()){
                     pauseButton.setText("Pause");
-                    pauseButton.setStyle("-fx-background-color: #ff0000; ");
+//                    pauseButton.setStyle("-fx-background-color: #ff0000; ");
+                    pauseButton.setStyle("-fx-background-color: #ed2b2b; ");
                     engine.resume();
                 }
                 else {
                     pauseButton.setText("Resume");
-                    pauseButton.setStyle("-fx-background-color: #00ff00; ");
+//                    pauseButton.setStyle("-fx-background-color: #00ff00; ");
+                    pauseButton.setStyle("-fx-background-color: #72f542; ");
                     engine.pause();
                     engineThread.interrupt();
                 }
@@ -114,7 +127,6 @@ public class SimulationScene {
             primaryStage.setOnCloseRequest(event -> {
                 engine.stop();
                 engineThread.interrupt();
-                // Brak System.exit(0) - od teraz zamknięcie okna symulacji nie kończy całego programu
             });
         }
         catch (FileNotFoundException e){

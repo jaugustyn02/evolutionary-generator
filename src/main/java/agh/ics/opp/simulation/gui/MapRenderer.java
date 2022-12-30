@@ -4,11 +4,15 @@ import agh.ics.opp.simulation.map.elements.IMapElement;
 import agh.ics.opp.simulation.map.IWorldMap;
 import agh.ics.opp.simulation.types.Vector2d;
 import javafx.application.Platform;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+//import javafx.geometry.HPos;
+//import javafx.geometry.VPos;
+//import javafx.scene.Node;
+//import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+//import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
 
@@ -17,8 +21,8 @@ public class MapRenderer{
     private final GridPane rootPane;
     private final Vector2d lowerLeft;
     private final Vector2d upperRight;
-    private final IWorldMap map;
     public VBox animalStats;
+    private final IWorldMap map;
     public int fieldGrow;
 
     public MapRenderer(GridPane rootPane, IWorldMap map, VBox animalStats) throws FileNotFoundException {
@@ -32,40 +36,64 @@ public class MapRenderer{
 
     public void render(){
         Platform.runLater(() -> {
-
             rootPane.getColumnConstraints().clear();
             rootPane.getRowConstraints().clear();
-
-
             rootPane.getChildren().clear();
-
             rootPane.setGridLinesVisible(true);
 
-            rootPane.getColumnConstraints().add(new ColumnConstraints(fieldGrow));
-            renderHeader();
+            addColumnConstraints();
 
-
-
-            for (int row = upperRight.y; row >= lowerLeft.y; row--) {
+            for (int row = upperRight.y-lowerLeft.y; row >= 0; row--) {
                 renderRow(row);
             }
-
         });
     }
 
-    private void renderHeader(){
-        rootPane.getRowConstraints().add(new RowConstraints(this.fieldGrow));
-        for (int col = lowerLeft.x; col <= upperRight.x; col++) {
+    private void addColumnConstraints(){
+        for (int col = 0; col <= upperRight.x-lowerLeft.x; col++) {
             rootPane.getColumnConstraints().add(new ColumnConstraints(fieldGrow));
-
         }
     }
 
     private void renderRow(int row){
         rootPane.getRowConstraints().add(new RowConstraints(this.fieldGrow));
-        for (int col = lowerLeft.x; col <= upperRight.x; col++){
+        for (int col = 0; col <= upperRight.x-lowerLeft.x; col++){
             GuiElementBox elementBox = new GuiElementBox((IMapElement) this.map.objectAt(new Vector2d(col, row)), fieldGrow, animalStats);
-            elementBox.renderElement(rootPane, map, col - lowerLeft.x + 1, upperRight.y - row + 1);
+            elementBox.renderElement(rootPane, map, col - lowerLeft.x, upperRight.y - row);
         }
     }
+
+
+
+
+//    public void render(){
+//        Platform.runLater(() -> {
+//            rootPane.getColumnConstraints().clear();
+//            rootPane.getRowConstraints().clear();
+//            rootPane.getChildren().clear();
+//            rootPane.setGridLinesVisible(true);
+//
+//            rootPane.getColumnConstraints().add(new ColumnConstraints(fieldGrow));
+//            renderHeader();
+//
+//            for (int row = upperRight.y; row >= lowerLeft.y; row--) {
+//                renderRow(row);
+//            }
+//        });
+//    }
+//
+//    private void renderHeader(){
+//        rootPane.getRowConstraints().add(new RowConstraints(this.fieldGrow));
+//        for (int col = lowerLeft.x; col <= upperRight.x; col++) {
+//            rootPane.getColumnConstraints().add(new ColumnConstraints(fieldGrow));
+//        }
+//    }
+//
+//    private void renderRow(int row){
+//        rootPane.getRowConstraints().add(new RowConstraints(this.fieldGrow));
+//        for (int col = lowerLeft.x; col <= upperRight.x; col++){
+//            GuiElementBox elementBox = new GuiElementBox((IMapElement) this.map.objectAt(new Vector2d(col, row)), fieldGrow);
+//            elementBox.renderElement(rootPane, map, col - lowerLeft.x + 1, upperRight.y - row + 1);
+//        }
+//    }
 }

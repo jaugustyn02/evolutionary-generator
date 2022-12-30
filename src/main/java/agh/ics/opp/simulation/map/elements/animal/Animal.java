@@ -129,6 +129,7 @@ public class Animal extends AbstractMapElement {
     }
     // gui
     public String getImagePath() {
+        if (energy == 0) return resourcesPath + "Dead.png";
         if (energy < 3) return resourcesPath + "Low.png";
         if (energy <= energyConsumption) return resourcesPath + "Mid.png";
         return resourcesPath + "Max.png";

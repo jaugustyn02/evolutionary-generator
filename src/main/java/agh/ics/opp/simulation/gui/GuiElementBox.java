@@ -4,13 +4,10 @@ import agh.ics.opp.simulation.map.IWorldMap;
 import agh.ics.opp.simulation.map.elements.animal.Animal;
 import agh.ics.opp.simulation.map.elements.IMapElement;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
@@ -47,18 +44,21 @@ public class GuiElementBox {
             } catch (IOException e) {
                 System.out.println("Exception: " + e.getMessage());
             }
-
+//            if (element.getLabelName() != null ){
+//                Label label = new Label(element.getLabelName());
+//                box.getChildren().add(label);
+//                label.setFont(new Font(10));
+//            }
             box.setAlignment(Pos.CENTER);
         }
     }
     public void renderElement(GridPane rootElement, IWorldMap map, int x, int y){
-        if(y >= map.getEquatorBottom()+2&& y<= map.getEquatorTop()+2){
+        if(y >= map.getEquatorBottom()+1&& y<= map.getEquatorTop()+1){
             box.setStyle("-fx-background-color:#239911; -fx-border-color: #6DD945; -fx-border-width: 2px; -fx-border-top-width: 0px; -fx-border-left-width: 0px");
         }
         else box.setStyle("-fx-background-color: #99FF8A; -fx-border-color: #6DD945; -fx-border-width: 2px; -fx-border-top-width: 0px; -fx-border-left-width: 0px");
         rootElement.add(box, x, y);
     }
 }
-
 
 

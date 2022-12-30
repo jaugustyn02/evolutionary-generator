@@ -2,7 +2,6 @@
 package agh.ics.opp;
 
 import agh.ics.opp.menu.gui.MenuApp;
-import agh.ics.opp.simulation.gui.SimulationApp;
 import javafx.application.Application;
 
 public class World {

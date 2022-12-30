@@ -13,7 +13,6 @@ import javafx.scene.layout.HBox;
 
 
 public class SimulationEngine implements IEngine, Runnable{
-    //    private final IWorldMap map;
     private final MapRenderer renderer;
     private final MapUpdater updater;
     private final StatisticsRunner stats;
@@ -27,16 +26,19 @@ public class SimulationEngine implements IEngine, Runnable{
     private volatile boolean running = true;
     private volatile boolean paused = false;
 
+
     public SimulationEngine(SimulationSetup setup, IWorldMap map, MapRenderer renderer, StatisticsRunner stats, HBox statsPlace) {
         this.updater = new MapUpdater(map, setup);
-//        this.map = map;
         this.renderer = renderer;
         this.stats = stats;
         this.statsPlace = statsPlace;
+        this.animalData.setName("Number of animals");
+        this.plantData.setName("Number of plants");
         this.renderer.render();
-        this.animalData.setName("Number Of Animals");
-        this.plantData.setName("Number Of Plants");
-//        System.out.println(map);
+        chart = statsPlace.lookup("#chart");
+        @SuppressWarnings("unchecked") LineChart<Number, Number> chart1 = (LineChart<Number, Number>)chart;
+        chart1.getData().add(animalData);
+        chart1.getData().add(plantData);
     }
 
     @Override
@@ -46,37 +48,28 @@ public class SimulationEngine implements IEngine, Runnable{
                 try {
                     Thread.sleep(moveDelay);
                 } catch (InterruptedException e) {
-                    System.out.println("Exception: The simulation has been aborted (1)");
-//                    throw new RuntimeException(e);
+//                    System.out.println("Exception: The simulation has been aborted (1)");
                 }
                 while (paused) {
                     try {
                         wait();
                     } catch (InterruptedException e) {
-                        System.out.println("Exception: The simulation has been aborted (2)");
+//                        System.out.println("Exception: The simulation has been aborted (2)");
                     }
                 }
                 dayNum++;
-                updater.nextDay();
+                updater.nextDay();      // simulate next day
                 this.renderer.render();
-                stats.updateStatistics();
-                System.out.println("Day " + (dayNum) + ":");
-//                System.out.println(map);
-                System.out.println(stats.getStatistics());
+                stats.updateStatistics(dayNum);       // updating statistics after next day passed
+
                 Platform.runLater(() -> {
                     element = statsPlace.lookup("#statsLabel");
                     Label label = (Label)element;
-                    label.setText("Day " + (dayNum) + stats.getStatistics().toString());
-
-                    chart = statsPlace.lookup("#chart");
-                    LineChart<Number, Number> chart1 = (LineChart<Number, Number>)chart;
-
+                    label.setText("Day: " + (dayNum) + "\n" + stats.getStatistics().toString());
                     animalData.getData().add(new XYChart.Data<>(dayNum, stats.getNumOfAnimals()));
-                    chart1.getData().add(animalData);
                     plantData.getData().add(new XYChart.Data<>(dayNum, stats.getNumOfPlants()));
-                    chart1.getData().add(plantData);
-                });
 
+                });
 
             }
         }
