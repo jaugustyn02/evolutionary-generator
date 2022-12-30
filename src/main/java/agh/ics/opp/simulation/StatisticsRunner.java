@@ -7,10 +7,7 @@ import agh.ics.opp.simulation.types.SimulationStatistics;
 import agh.ics.opp.simulation.types.Vector2d;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -68,19 +65,17 @@ public class StatisticsRunner {
                 .flatMap(x -> IntStream.range(0, map.getHeight())
                         .mapToObj(y -> new Vector2d(x, y))
                 ).filter(v -> !map.isOccupied(v)).count();
-        mostPopularGenome = animals.stream().collect(Collectors.groupingBy(Animal::getGenome, Collectors.counting()))
-                .entrySet()
-                .stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey).orElse(null);
+        mostPopularGenome = Objects.requireNonNull(animals.stream().collect(Collectors.groupingBy(animal -> Arrays.stream(animal.getGenome()).boxed().toList(), Collectors.counting()))
+                        .entrySet()
+                        .stream()
+                        .max(Map.Entry.comparingByValue())
+                        .map(Map.Entry::getKey).orElse(null))
+                .stream().mapToInt(Integer::intValue).toArray();
         avgAnimalEnergy = animals.stream().mapToInt(Animal::getEnergy)
                 .summaryStatistics().getAverage();
         numOfDeadAnimals += animals.stream().filter(animal -> animal.getEnergy() == 0).count();
         sumOfDeadAnimalsLifeSpan += animals.stream().filter(animal -> animal.getEnergy() == 0).mapToInt(Animal::getAge).sum();
         avgAnimalLifeSpan = (double) sumOfDeadAnimalsLifeSpan / numOfDeadAnimals;
-        //System.out.println(animals.stream().collect(Collectors.groupingBy(Animal::getGenome, Collectors.counting()))
-        //        toString());
-
         if(saveToFile) saveToCSVFile(dayNum);
     }
     public int getNumOfAnimals(){

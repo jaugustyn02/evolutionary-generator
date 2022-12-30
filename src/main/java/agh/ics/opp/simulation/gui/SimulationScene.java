@@ -34,7 +34,23 @@ public class SimulationScene {
         pauseButton.setText("Pause");
         pauseButton.setFont(new Font(20));
 //        pauseButton.setStyle("-fx-background-color: #ff0000; ");
-        pauseButton.setStyle("-fx-background-color: #ed2b2b; ");
+        String cssLayoutPause = ("""
+                -fx-background-color:rgba(238,18,18,0.74);
+                    -fx-background-radius: 30;
+                    -fx-background-insets: 0,1,2,3,0;
+                    -fx-text-fill: white;
+                    -fx-font-weight: bold;
+                    -fx-font-size: 16px;
+                    -fx-padding: 10 20 10 20;""");
+        String cssLayoutResume = ("""
+                -fx-background-color:rgba(18,238,47,0.74);
+                    -fx-background-radius: 30;
+                    -fx-background-insets: 0,1,2,3,0;
+                    -fx-text-fill: white;
+                    -fx-font-weight: bold;
+                    -fx-font-size: 16px;
+                    -fx-padding: 10 20 10 20;""");
+        pauseButton.setStyle(cssLayoutPause);
         pauseButton.setMinWidth(800);
         HBox buttonBox = new HBox();
         buttonBox.getChildren().add(pauseButton);
@@ -115,14 +131,14 @@ public class SimulationScene {
                 if(engine.isPaused()){
                     pauseButton.setText("Pause");
 //                    pauseButton.setStyle("-fx-background-color: #ff0000; ");
-                    pauseButton.setStyle("-fx-background-color: #ed2b2b; ");
+                    pauseButton.setStyle(cssLayoutPause);
                     engine.resume();
                 }
                 else {
                     pauseButton.setText("Resume");
                     renderer.render(true);
 //                    pauseButton.setStyle("-fx-background-color: #00ff00; ");
-                    pauseButton.setStyle("-fx-background-color: #72f542; ");
+                    pauseButton.setStyle(cssLayoutResume);
                     engine.pause();
                     engineThread.interrupt();
                 }

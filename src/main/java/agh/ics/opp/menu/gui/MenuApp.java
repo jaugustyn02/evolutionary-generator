@@ -13,12 +13,16 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 
 import java.io.*;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static javafx.scene.text.FontWeight.*;
 
 
 public class MenuApp extends Application {
@@ -28,7 +32,7 @@ public class MenuApp extends Application {
 
         // title
         Label title = new Label("Generator ewolucyjny");
-        title.setFont(new Font(36));
+        title.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         HBox hBox1 = new HBox();
         hBox1.getChildren().add(title);
         hBox1.setAlignment(Pos.CENTER);
@@ -36,11 +40,19 @@ public class MenuApp extends Application {
         // end
 
         // configuration and start buttons
+        String cssLayout = ("""
+                -fx-background-color:#4646cb;
+                    -fx-background-radius: 30;
+                    -fx-background-insets: 0,1,2,3,0;
+                    -fx-text-fill: white;
+                    -fx-font-weight: bold;
+                    -fx-font-size: 14px;
+                    -fx-padding: 10 20 10 20;""");
         Button setupButton = new Button("Select configuration file");
-        setupButton.setStyle("-fx-background-color: #bdbdbd; -fx-border-color: #ab1002; -fx-border-width: 1.5;");
+        setupButton.setStyle(cssLayout);
         setupButton.setFont(new Font(14));
         Button startButton = new Button("Start");
-        startButton.setStyle("-fx-background-color: #5581e0; -fx-border-color: black; -fx-border-width: 1.5; ");
+        startButton.setStyle(cssLayout);
         startButton.setFont(new Font(14));
         HBox hBox2 = new HBox(20);
         hBox2.getChildren().add(setupButton);
@@ -59,6 +71,7 @@ public class MenuApp extends Application {
 
         // csv file checkbox
         CheckBox csvCheckBox = new CheckBox("Save simulation statistics in CSV file");
+
         HBox hBox3 = new HBox();
         hBox3.getChildren().add(csvCheckBox);
         hBox3.setAlignment(Pos.CENTER);
@@ -80,6 +93,7 @@ public class MenuApp extends Application {
         vBox.getChildren().add(hBox4);
 
         Scene scene = new Scene(vBox, 500, vBox.getPrefHeight());
+        vBox.setStyle("-fx-background-color: white");
         primaryStage.setTitle("Menu");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -90,11 +104,9 @@ public class MenuApp extends Application {
             selectedFile.set(fileChooser.showOpenDialog(primaryStage));
             if (selectedFile.get() != null){
                 setupButton.setText(selectedFile.get().getName());
-                setupButton.setStyle("-fx-background-color: #bdbdbd; -fx-border-color: #04911e; -fx-border-width: 2;");
             }
             else {
                 setupButton.setText("No configuration file selected");
-                setupButton.setStyle("-fx-background-color: #bdbdbd; -fx-border-color: #ab1002; -fx-border-width: 2;");
 
             }
         }));
