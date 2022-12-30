@@ -1,0 +1,7 @@
+Day,Number of animals,Number of plants,Number of empty squares,Most popular genome,Average animal energy,Average animal life span
+1,11,13,79,"[1, 4, 5, 5, 1]",10.27,0.0
+2,11,15,76,"[1, 4, 5, 5, 1]",10.0,0.0
+3,11,16,75,"[1, 4, 5, 5, 1]",10.09,0.0
+4,11,17,73,"[1, 4, 5, 5, 1]",10.18,0.0
+5,12,18,73,"[1, 4, 5, 5, 1]",9.33,0.0
+6,12,20,69,"[1, 4, 5, 5, 1]",9.0,0.0
