@@ -1,4 +1,4 @@
-# Projekt 1 - Generator Ewolucyjny
+# Projekt - Generator Ewolucyjny
 ## 1. Informacje ogólne
 **Autorzy**: Laura Wiktor, Jan Augustyn\
 **Implementacja**: Wszystkie wymogi dotyczące implementacji zostały spełnione
